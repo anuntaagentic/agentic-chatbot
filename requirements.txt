@@ -1,0 +1,2 @@
+pyautogen
+PySide6

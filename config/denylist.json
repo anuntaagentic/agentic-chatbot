@@ -1,0 +1,14 @@
+{
+  "commands": [
+    "format*",
+    "diskpart*",
+    "bcdedit*",
+    "shutdown*",
+    "Restart-Computer*",
+    "Stop-Computer*",
+    "reg delete*",
+    "Remove-Item C:\\Windows*",
+    "rd /s*",
+    "del /s*"
+  ]
+}
