@@ -1,2 +1,3 @@
 pyautogen
 PySide6
+scikit-learn

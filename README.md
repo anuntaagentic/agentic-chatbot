@@ -39,6 +39,20 @@ Set environment variables before launching:
 - `GROQ_MODEL`: optional (default: `llama3-70b-8192`)
 - `GROQ_BASE_URL`: optional (default: `https://api.groq.com/openai/v1`)
 
+## Knowledge base + web hints
+Generate vectors once:
+
+```bash
+python -m app.build_vectors
+```
+
+This writes `tech_support_dataset.vectors.pkl`. The app will load vectors from this file on startup.
+Optional web hints use DuckDuckGo instant answers. Disable by setting:
+
+```
+setx ENABLE_WEB_SEARCH 0
+```
+
 ## Safety gates
 Allowlist and denylist live here:
 - `config/allowlist.json`
