@@ -4,30 +4,14 @@ Last updated: 2026-01-27
 
 ## High-level flow
 1) User submits an issue or question in the chat UI.
-2) Diagnosis agent builds a step-by-step diagnostic plan.
-3) Plan steps are preflighted (availability + allow/deny lists).
-4) Commands execute in sequence; outputs are logged.
-5) RAG agent retrieves top matches from `tech_support_dataset.vectors.pkl`.
-6) Web scraper agent retrieves web hints (DuckDuckGo).
-7) Fix planner composes:
-   - direct answer (for info questions), or
-   - a fix plan with commands (for repair/install).
-8) Review/Reflection:
-   - If any commands are blocked by allow-list, the Fix Planner receives the block list.
-   - The Fix Planner proposes a safe alternative command or escalates to a human.
-9) Gatekeeper finalizes:
-   - Combines KB + web hints into a single response.
-   - Removes promotional or unsafe output and enforces source attribution.
-10) Execution + verification:
-   - Executor runs fix commands and verifies outcome.
-   - If verification fails, UI allows staged retries with different commands.
-11) UI displays:
-   - diagnostics output,
-   - sources (KB + web),
-   - web query + result count (when web sources are empty),
-   - concise answer or fix plan.
-9) If fixes are proposed, the user must confirm.
-10) Executor runs approved commands and logs results.
+2) Research agent checks for SOP matches in the KB and fetches Tavily web hints.
+3) Orchestrator uses the SOP + Tavily hints to generate a diagnostic script and summary.
+4) UI shows the diagnostic summary and asks the user to approve running the script.
+5) If approved, the action agent executes the diagnostic commands; outputs are logged.
+6) Diagnosis summary is generated from the command outputs.
+7) Fix planner uses diagnostics + SOP + Tavily hints to generate a resolution script.
+8) UI presents the fix summary and requests confirmation to run it.
+9) Executor runs approved commands and logs results.
 
 ## RAG workflow
 - Vector generation (one-time or on CSV changes):
@@ -50,9 +34,8 @@ Last updated: 2026-01-27
 - Answers cite KB ID and web link when used.
 
 ## Web search behavior
-- Uses DuckDuckGo instant answers first, then falls back to HTML parsing.
-- UI shows the final web result and the web query used (for debugging).
-- Web search is skipped for system-info questions (to avoid irrelevant ads/results).
+- Uses Tavily search.
+- UI shows web sources and the web query used (for debugging).
 
 ## Fix stages
 - Bluetooth and Wi‑Fi fixes run in stages. Each retry advances to a new stage with different commands.

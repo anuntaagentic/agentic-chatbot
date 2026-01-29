@@ -47,9 +47,10 @@ python -m app.build_vectors
 ```
 
 This writes `tech_support_dataset.vectors.pkl`. The app will load vectors from this file on startup.
-Optional web hints use DuckDuckGo instant answers. Disable by setting:
+Optional web hints use Tavily. Configure `TAVILY_API_KEY` and disable by setting:
 
 ```
+setx TAVILY_API_KEY "your-key-here"
 setx ENABLE_WEB_SEARCH 0
 ```
 

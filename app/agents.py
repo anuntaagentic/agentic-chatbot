@@ -1,10 +1,15 @@
+import json
+import logging
+from datetime import datetime
 import os
+import re
 import subprocess
 from dataclasses import dataclass, field
 from typing import List, Optional
 
 from .command_filter import CommandFilter
 from .rag import TechSupportRAG
+from .logging_utils import get_log_dir
 from .web_search import WebSearch
 
 
@@ -21,6 +26,21 @@ class CommandResult:
 class PlanStep:
     description: str
     command: str
+
+
+@dataclass
+class DiagnosticPlanResult:
+    issue_type: str
+    summary: str
+    plan_steps: List[PlanStep] = field(default_factory=list)
+    install_app: str = ""
+    rag_matches: List[object] = field(default_factory=list)
+    web_results: List[object] = field(default_factory=list)
+    web_query: str = ""
+    web_error: str = ""
+    web_count: int = 0
+    sop_used: str = ""
+    is_chat: bool = False
 
 
 @dataclass
@@ -89,15 +109,25 @@ class CommandRunner:
 class AutoGenHelper:
     def __init__(self):
         self.api_key = os.environ.get("GROQ_API_KEY", "")
-        self.model = os.environ.get("GROQ_MODEL", "llama3-70b-8192")
-        self.base_url = os.environ.get("GROQ_BASE_URL", "https://api.groq.com/openai/v1")
+        model = os.environ.get("GROQ_MODEL", "").strip()
+        self.model = model or "llama3-70b-8192"
+        base_url = os.environ.get("GROQ_BASE_URL", "").strip()
+        self.base_url = base_url or "https://api.groq.com/openai/v1"
+        self.logger = logging.getLogger("agentic_chatbot")
 
     def available(self):
         return bool(self.api_key)
 
     def generate(self, system_prompt, user_prompt):
         if not self.available():
+            self.logger.info("LLM unavailable: GROQ_API_KEY missing.")
             return ""
+        if "groq.com" in self.base_url and self.model.startswith("openai/"):
+            self.logger.info(
+                "LLM model '%s' is not compatible with Groq base_url. Falling back.",
+                self.model,
+            )
+            self.model = "llama3-70b-8192"
         try:
             import autogen
 
@@ -123,167 +153,141 @@ class AutoGenHelper:
             user_proxy.initiate_chat(assistant, message=user_prompt, clear_history=True)
             messages = user_proxy.chat_messages.get(assistant, [])
             if not messages:
+                self.logger.info("LLM returned no messages.")
                 return ""
-            return messages[-1].get("content", "").strip()
-        except Exception:
+            self._log_autogen_conversation(system_prompt, user_prompt, messages)
+            content = ""
+            for message in reversed(messages):
+                candidate = message.get("content", "")
+                if candidate:
+                    content = candidate
+                    break
+            if not content:
+                self.logger.info("LLM returned empty content.")
+            return content.strip()
+        except Exception as exc:
+            self.logger.info("LLM call failed: %s", exc)
             return ""
+
+    def _log_autogen_conversation(self, system_prompt, user_prompt, messages):
+        try:
+            log_dir = get_log_dir()
+            log_path = os.path.join(
+                log_dir, f"autogen-{datetime.now().strftime('%Y-%m-%d')}.log"
+            )
+            lines = []
+            lines.append(f"{datetime.now().isoformat()} SYSTEM: {system_prompt}")
+            lines.append(f"{datetime.now().isoformat()} USER: {user_prompt}")
+            for message in messages:
+                role = message.get("role", "assistant")
+                content = message.get("content", "")
+                lines.append(f"{datetime.now().isoformat()} {role.upper()}: {content}")
+            lines.append("-" * 80)
+            with open(log_path, "a", encoding="utf-8") as handle:
+                handle.write("\n".join(lines) + "\n")
+        except Exception as exc:
+            self.logger.info("Failed to write autogen log: %s", exc)
 
 
 class OrchestratorAgent:
-    def __init__(self):
+    def __init__(self, llm_helper):
         self.fix_stage = 1
+        self.llm_helper = llm_helper
 
-    def build_plan(self, issue_text):
-        issue_type = self._classify_issue(issue_text)
-        install_app = self._parse_install_app(issue_text) if issue_type == "install_app" else ""
-        plan_steps = self._diagnostic_plan(issue_type, install_app)
-        return issue_type, install_app, plan_steps
+    def build_plan(self, issue_text, sop_text, web_results):
+        issue_type, install_app = self._classify_issue(issue_text)
+        plan_steps, summary = self._diagnostic_plan(
+            issue_text, issue_type, install_app, sop_text, web_results
+        )
+        return issue_type, install_app, plan_steps, summary
 
     def _classify_issue(self, issue_text):
-        text = issue_text.lower()
-        if "system information" in text or "system info" in text or "system infromation" in text:
-            return "system_info"
-        if "install " in text or text.startswith("install") or "download " in text or "setup " in text:
-            return "install_app"
-        if "os" in text and ("build" in text or "version" in text):
-            return "system_info"
-        if "cpu" in text or "processor" in text:
-            return "system_info"
-        if "bluetooth" in text:
-            return "bluetooth"
-        if "ip" in text or "ip address" in text or "address" in text:
-            return "system_info"
-        if "system info" in text or "computer info" in text or "about my computer" in text or "about my system" in text or "tell me about my system" in text:
-            return "system_info"
-        if "details about my computer" in text or "details about my system" in text:
-            return "system_info"
-        if "detail" in text and ("computer" in text or "copmuter" in text or "pc" in text or "system" in text):
-            return "system_info"
-        if "wifi" in text or "wi-fi" in text or "network" in text or "internet" in text:
-            return "network"
-        if "disk" in text or "space" in text or "c drive" in text:
-            return "disk_space"
-        return "general"
-
-    def _diagnostic_plan(self, issue_type, install_app):
-        if issue_type == "install_app":
-            app_label = install_app or "requested app"
-            return [
-                PlanStep(
-                    "Check winget availability.",
-                    "Get-Command winget -ErrorAction SilentlyContinue",
-                ),
-                PlanStep(
-                    f"Search winget for {app_label}.",
-                    f'winget search --name "{app_label}"',
-                ),
-            ]
-        if issue_type == "disk_space":
-            return [
-                PlanStep(
-                    "Check file system drive usage.",
-                    "Get-PSDrive -PSProvider FileSystem",
-                ),
-                PlanStep(
-                    "Inspect volume sizes and free space.",
-                    "Get-Volume | Select-Object DriveLetter, FileSystemLabel, SizeRemaining, Size",
-                ),
-                PlanStep(
-                    "Estimate temp folder size.",
-                    "Get-ChildItem $env:TEMP -Recurse -Force -ErrorAction SilentlyContinue | Measure-Object -Property Length -Sum",
-                ),
-            ]
-        if issue_type == "network":
-            return [
-                PlanStep(
-                    "Check network adapters and link status.",
-                    "Import-Module NetAdapter -ErrorAction SilentlyContinue; "
-                    "Get-NetAdapter | Select-Object Name, Status, LinkSpeed",
-                ),
-                PlanStep(
-                    "Review IP configuration.",
-                    "Import-Module NetTCPIP -ErrorAction SilentlyContinue; Get-NetIPConfiguration",
-                ),
-                PlanStep(
-                    "Test internet connectivity.",
-                    "Test-NetConnection 8.8.8.8 -InformationLevel Detailed",
-                ),
-                PlanStep(
-                    "Gather full IP stack details.",
-                    "ipconfig /all",
-                ),
-                PlanStep(
-                    "Inspect Wi-Fi interface status.",
-                    "netsh wlan show interfaces",
-                ),
-            ]
-        if issue_type == "bluetooth":
-            return [
-                PlanStep(
-                    "Check Bluetooth adapter status.",
-                    "Import-Module PnpDevice -ErrorAction SilentlyContinue; "
-                    "Get-PnpDevice -Class Bluetooth | Select-Object Status, FriendlyName, InstanceId | Format-List",
-                ),
-                PlanStep(
-                    "Check Bluetooth service state.",
-                    "Get-Service bthserv | Select-Object Status, StartType | Format-List",
-                ),
-                PlanStep(
-                    "Check radio status (if available).",
-                    "Import-Module CimCmdlets -ErrorAction SilentlyContinue; "
-                    "Get-CimInstance -Namespace root\\wmi -ClassName BthRadio | Select-Object InstanceName, SoftwareRadioState",
-                ),
-            ]
-        if issue_type == "system_info":
-            return [
-                PlanStep(
-                    "Gather IP address information.",
-                    "Import-Module NetTCPIP -ErrorAction SilentlyContinue; "
-                    "Get-NetIPAddress | Select-Object IPAddress, InterfaceAlias, AddressFamily",
-                ),
-                PlanStep(
-                    "Capture OS and system info.",
-                    "Get-ComputerInfo | Select-Object CsName, OsName, OsVersion, OsBuildNumber, "
-                    "CsSystemType, WindowsProductName | Format-List",
-                ),
-                PlanStep(
-                    "Capture CPU details.",
-                    "Import-Module CimCmdlets -ErrorAction SilentlyContinue; "
-                    "Get-CimInstance Win32_Processor | Select-Object Name, NumberOfCores, NumberOfLogicalProcessors | Format-List",
-                ),
-                PlanStep(
-                    "Capture memory details.",
-                    "Import-Module CimCmdlets -ErrorAction SilentlyContinue; "
-                    "Get-CimInstance Win32_OperatingSystem | Select-Object TotalVisibleMemorySize, FreePhysicalMemory | Format-List",
-                ),
-                PlanStep(
-                    "Capture disk usage.",
-                    "Get-PSDrive -PSProvider FileSystem | Select-Object Name, Used, Free | Format-List",
-                ),
-                PlanStep(
-                    "Capture basic IP stack details.",
-                    "ipconfig",
-                ),
-            ]
-        return [
-            PlanStep(
-                "Gather OS and device info.",
-                "Get-ComputerInfo | Select-Object OsName, OsVersion, OsBuildNumber, CsName | Format-List",
+        if not self.llm_helper.available():
+            return "general", ""
+        system_prompt = (
+            "You are a Windows support classifier. Return JSON only. "
+            "Use issue_type from: system_info, install_app, network, bluetooth, performance, account, app_error, general, chitchat."
+        )
+        user_prompt = (
+            f"Issue: {issue_text}\n"
+            "Return JSON with keys: issue_type, install_app (empty if not install)."
+        )
+        response = self.llm_helper.generate(system_prompt, user_prompt)
+        payload = self._extract_json(response)
+        if not payload:
+            self.llm_helper.logger.info(
+                "LLM classification parse failed. Raw response: %s",
+                (response or "")[:800],
             )
-        ]
+        issue_type = (payload.get("issue_type") or "general").strip()
+        install_app = (payload.get("install_app") or "").strip()
+        return issue_type, install_app
 
-    def _parse_install_app(self, issue_text):
-        text = issue_text.strip()
-        lowered = text.lower()
-        keywords = ["install", "download", "setup", "get"]
-        for keyword in keywords:
-            if keyword in lowered:
-                parts = text.split(keyword, 1)
-                if len(parts) == 2:
-                    app = parts[1].strip(" .")
-                    if app:
-                        return app
-        return ""
+    def _diagnostic_plan(self, issue_text, issue_type, install_app, sop_text, web_results):
+        if not self.llm_helper.available():
+            return [], "LLM unavailable; unable to generate a diagnostic script."
+        web_lines = []
+        for result in web_results or []:
+            title = getattr(result, "title", "")
+            snippet = getattr(result, "snippet", "")
+            url = getattr(result, "url", "")
+            line = f"{title} | {snippet} | {url}".strip(" |")
+            if line:
+                web_lines.append(line)
+        web_text = "\n".join(web_lines[:5])
+        sop_context = sop_text or "No SOP match found."
+        system_prompt = (
+            "You are a Windows diagnostics planner. Use the SOP if provided and the web hints. "
+            "Return JSON only with keys: summary, commands. "
+            "Commands must be read-only PowerShell commands for diagnostics (no changes). "
+            "commands is a list of objects: {\"description\": \"...\", \"command\": \"...\"}."
+        )
+        user_prompt = (
+            f"Issue: {issue_text}\n"
+            f"Type: {issue_type}\n"
+            f"Install app: {install_app}\n"
+            f"SOP: {sop_context}\n"
+            f"Web hints:\n{web_text}\n"
+            "If the issue is just a greeting or small talk, return a friendly summary and an empty commands list."
+            "Otherwise generate a diagnostic script that checks services, logs, adapters, system metrics, and app status as relevant."
+        )
+        response = self.llm_helper.generate(system_prompt, user_prompt)
+        payload = self._extract_json(response)
+        if not payload:
+            self.llm_helper.logger.info(
+                "LLM diagnostics plan parse failed. Raw response: %s",
+                (response or "")[:1200],
+            )
+        summary = (payload.get("summary") or "").strip()
+        if issue_type == "chitchat" and not summary:
+            summary = "Hi! How can I help you with your Windows issue today?"
+        plan_steps = []
+        for item in payload.get("commands", []) or []:
+            if isinstance(item, dict):
+                description = (item.get("description") or "").strip()
+                command = (item.get("command") or "").strip()
+            else:
+                description = ""
+                command = str(item).strip()
+            if command:
+                plan_steps.append(PlanStep(description or "Run diagnostic command.", command))
+        if not summary:
+            summary = "Generated a diagnostic script based on the SOP and web references."
+        return plan_steps, summary
+
+    def _extract_json(self, text):
+        if not text:
+            return {}
+        try:
+            return json.loads(text)
+        except Exception:
+            match = re.search(r"\{.*\}", text, re.S)
+            if not match:
+                return {}
+            try:
+                return json.loads(match.group(0))
+            except Exception:
+                return {}
 
 
 class ResearchAgent:
@@ -291,16 +295,14 @@ class ResearchAgent:
         self.rag = rag
         self.web_search = web_search
 
-    def fetch(self, issue_text, issue_type, keywords):
+    def fetch(self, issue_text, keywords):
         rag_matches = []
         if self.rag and self.rag.matrix is not None:
             rag_matches = self.rag.search(issue_text, keywords=keywords)
         web_results = []
-        web_query = ""
-        if issue_type != "system_info":
-            web_query = f"{issue_text} Windows 11 fix script"
-            if self.web_search:
-                web_results = self.web_search.search(web_query)
+        web_query = f"{issue_text} Windows 11 troubleshooting steps"
+        if self.web_search:
+            web_results = self.web_search.search(web_query)
         return {
             "rag_matches": rag_matches,
             "web_results": web_results,
@@ -346,18 +348,8 @@ class ActionAgent:
         return validated_steps, results
 
     def _preflight(self, step):
-        if "winget search" in step.command and ("requested app" in step.command or '""' in step.command):
-            return False, "missing app name"
-        if "Get-CimInstance -Namespace root\\wmi -ClassName BthRadio" in step.command:
-            check_cmd = (
-                "Import-Module CimCmdlets -ErrorAction SilentlyContinue; "
-                "Get-CimClass -Namespace root\\wmi -ClassName BthRadio -ErrorAction SilentlyContinue"
-            )
-            result = self.runner.run(check_cmd)
-            if not result.allowed:
-                return False, "preflight blocked"
-            if not result.output:
-                return False, "BthRadio class not available"
+        if not step.command or not step.command.strip():
+            return False, "empty command"
         return True, ""
 
 
@@ -405,160 +397,48 @@ class DiagnosisAgent:
         self.action = action
         self.llm_helper = llm_helper
 
-    def run(self, issue_text):
-        issue_type, install_app, plan_steps = self.orchestrator.build_plan(issue_text)
-        validated_steps, results = self.action.execute_plan(plan_steps)
-        research_data = self.research.fetch(
-            issue_text, issue_type, self._rag_keywords(issue_text)
+    def prepare_plan(self, issue_text):
+        research_data = self.research.fetch(issue_text, self._rag_keywords(issue_text))
+        rag_matches = research_data["rag_matches"]
+        sop_text = self._select_sop(rag_matches)
+        issue_type, install_app, plan_steps, summary = self.orchestrator.build_plan(
+            issue_text, sop_text, research_data["web_results"]
         )
-        findings = self._summarize(issue_text, issue_type, results, research_data["rag_matches"])
-        return DiagnosisResult(
+        return DiagnosticPlanResult(
             issue_type=issue_type,
-            findings=findings,
-            action_plan=validated_steps,
-            command_results=results,
+            summary=summary,
+            plan_steps=plan_steps,
             install_app=install_app,
-            rag_matches=research_data["rag_matches"],
+            rag_matches=rag_matches,
             web_results=research_data["web_results"],
             web_query=research_data["web_query"],
             web_error=research_data["web_error"],
             web_count=research_data["web_count"],
+            sop_used=sop_text,
+            is_chat=issue_type == "chitchat",
+        )
+
+    def execute(self, issue_text, plan):
+        validated_steps, results = self.action.execute_plan(plan.plan_steps)
+        findings = self._summarize(
+            issue_text, plan.issue_type, results, plan.rag_matches, plan.web_results
+        )
+        return DiagnosisResult(
+            issue_type=plan.issue_type,
+            findings=findings,
+            action_plan=validated_steps,
+            command_results=results,
+            install_app=plan.install_app,
+            rag_matches=plan.rag_matches,
+            web_results=plan.web_results,
+            web_query=plan.web_query,
+            web_error=plan.web_error,
+            web_count=plan.web_count,
             blocked_commands=[result.command for result in results if not result.allowed],
             fix_stage=getattr(self.orchestrator, "fix_stage", 1),
         )
 
-    def _classify_issue(self, issue_text):
-        text = issue_text.lower()
-        if "blutooth" in text or "bluetooth" in text:
-            return "bluetooth"
-        if "install " in text or text.startswith("install") or "download " in text or "setup " in text:
-            return "install_app"
-        if "os" in text and ("build" in text or "version" in text):
-            return "system_info"
-        if "cpu" in text or "processor" in text:
-            return "system_info"
-        if "ip" in text or "ip address" in text or "address" in text:
-            return "system_info"
-        if "system info" in text or "computer info" in text or "about my computer" in text or "about my system" in text or "tell me about my system" in text:
-            return "system_info"
-        if "details about my computer" in text or "details about my system" in text:
-            return "system_info"
-        if "detail" in text and ("computer" in text or "copmuter" in text or "pc" in text or "system" in text):
-            return "system_info"
-        if "wifi" in text or "wi-fi" in text or "network" in text or "internet" in text:
-            return "network"
-        if "disk" in text or "space" in text or "c drive" in text:
-            return "disk_space"
-        return "general"
-
-    def _diagnostic_plan(self, issue_type, install_app):
-        if issue_type == "install_app":
-            app_label = install_app or "requested app"
-            return [
-                PlanStep(
-                    "Check winget availability.",
-                    "Get-Command winget -ErrorAction SilentlyContinue",
-                ),
-                PlanStep(
-                    f"Search winget for {app_label}.",
-                    f'winget search --name "{app_label}"',
-                ),
-            ]
-        if issue_type == "disk_space":
-            return [
-                PlanStep(
-                    "Check file system drive usage.",
-                    "Get-PSDrive -PSProvider FileSystem",
-                ),
-                PlanStep(
-                    "Inspect volume sizes and free space.",
-                    "Get-Volume | Select-Object DriveLetter, FileSystemLabel, SizeRemaining, Size",
-                ),
-                PlanStep(
-                    "Estimate temp folder size.",
-                    "Get-ChildItem $env:TEMP -Recurse -Force -ErrorAction SilentlyContinue | Measure-Object -Property Length -Sum",
-                ),
-            ]
-        if issue_type == "network":
-            return [
-                PlanStep(
-                    "Check network adapters and link status.",
-                    "Import-Module NetAdapter -ErrorAction SilentlyContinue; "
-                    "Get-NetAdapter | Select-Object Name, Status, LinkSpeed",
-                ),
-                PlanStep(
-                    "Review IP configuration.",
-                    "Import-Module NetTCPIP -ErrorAction SilentlyContinue; Get-NetIPConfiguration",
-                ),
-                PlanStep(
-                    "Test internet connectivity.",
-                    "Test-NetConnection 8.8.8.8 -InformationLevel Detailed",
-                ),
-                PlanStep(
-                    "Gather full IP stack details.",
-                    "ipconfig /all",
-                ),
-                PlanStep(
-                    "Inspect Wi-Fi interface status.",
-                    "netsh wlan show interfaces",
-                ),
-            ]
-        if issue_type == "bluetooth":
-            return [
-                PlanStep(
-                    "Check Bluetooth adapter status.",
-                    "Import-Module PnpDevice -ErrorAction SilentlyContinue; "
-                    "Get-PnpDevice -Class Bluetooth | Select-Object Status, FriendlyName, InstanceId | Format-List",
-                ),
-                PlanStep(
-                    "Check Bluetooth service state.",
-                    "Get-Service bthserv | Select-Object Status, StartType | Format-List",
-                ),
-                PlanStep(
-                    "Check radio status (if available).",
-                    "Import-Module CimCmdlets -ErrorAction SilentlyContinue; "
-                    "Get-CimInstance -Namespace root\\wmi -ClassName BthRadio | Select-Object InstanceName, SoftwareRadioState",
-                ),
-            ]
-        if issue_type == "system_info":
-            return [
-                PlanStep(
-                    "Gather IP address information.",
-                    "Import-Module NetTCPIP -ErrorAction SilentlyContinue; "
-                    "Get-NetIPAddress | Select-Object IPAddress, InterfaceAlias, AddressFamily",
-                ),
-                PlanStep(
-                    "Capture OS and system info.",
-                    "Get-ComputerInfo | Select-Object CsName, OsName, OsVersion, OsBuildNumber, "
-                    "CsSystemType, WindowsProductName | Format-List",
-                ),
-                PlanStep(
-                    "Capture CPU details.",
-                    "Import-Module CimCmdlets -ErrorAction SilentlyContinue; "
-                    "Get-CimInstance Win32_Processor | Select-Object Name, NumberOfCores, NumberOfLogicalProcessors | Format-List",
-                ),
-                PlanStep(
-                    "Capture memory details.",
-                    "Import-Module CimCmdlets -ErrorAction SilentlyContinue; "
-                    "Get-CimInstance Win32_OperatingSystem | Select-Object TotalVisibleMemorySize, FreePhysicalMemory | Format-List",
-                ),
-                PlanStep(
-                    "Capture disk usage.",
-                    "Get-PSDrive -PSProvider FileSystem | Select-Object Name, Used, Free | Format-Table -AutoSize",
-                ),
-                PlanStep(
-                    "Capture basic IP stack details.",
-                    "ipconfig",
-                ),
-            ]
-        return [
-            PlanStep(
-                "Gather OS and device info.",
-                "Get-ComputerInfo | Select-Object OsName, OsVersion, OsBuildNumber, CsName | Format-List",
-            )
-        ]
-
-    def _summarize(self, issue_text, issue_type, results, rag_matches):
+    def _summarize(self, issue_text, issue_type, results, rag_matches, web_results):
         output_lines = []
         for result in results:
             if result.allowed and result.output:
@@ -569,55 +449,29 @@ class DiagnosisAgent:
         rag_hint = ""
         if rag_matches:
             top = rag_matches[0]
-            rag_hint = f" Related KB: {top.issue} -> {top.response}"
+            rag_hint = f" Related SOP: {top.issue} -> {top.response}"
+        web_hint = ""
+        if web_results:
+            top_web = web_results[0]
+            web_hint = f" Web hint: {top_web.title} | {top_web.url}"
         if self.llm_helper.available() and joined:
             system_prompt = (
-                "You are a Windows diagnostics assistant. Summarize the issue based on command output."
+            "You are a Windows diagnostics assistant. Provide a short, user-friendly summary in passive voice only."
             )
             user_prompt = (
-                f"Issue: {issue_text}\nType: {issue_type}\nOutput:\n{joined}\n{rag_hint}"
+                f"Issue: {issue_text}\nType: {issue_type}\nOutput:\n{joined}\n{rag_hint}\n{web_hint}"
             )
             summary = self.llm_helper.generate(system_prompt, user_prompt)
             if summary:
                 return summary
-        if issue_type == "disk_space":
-            return "Disk diagnostics complete. I gathered drive usage and temp folder size."
-        if issue_type == "network":
-            return "Network diagnostics complete. I checked adapters, IP configuration, and connectivity."
-        if issue_type == "system_info":
-            return "System info diagnostics complete. I gathered IP address details."
-        if issue_type == "bluetooth":
-            return "Bluetooth diagnostics complete. I checked the adapter, service, and radio state."
-        if issue_type == "install_app":
-            return "Install diagnostics complete. I checked winget and searched for the app."
         return "Diagnostics complete."
 
-    def _preflight(self, step):
-        if "winget search" in step.command and ("requested app" in step.command or '""' in step.command):
-            return False, "missing app name"
-        if "Get-CimInstance -Namespace root\\wmi -ClassName BthRadio" in step.command:
-            check_cmd = (
-                "Import-Module CimCmdlets -ErrorAction SilentlyContinue; "
-                "Get-CimClass -Namespace root\\wmi -ClassName BthRadio -ErrorAction SilentlyContinue"
-            )
-            result = self.runner.run(check_cmd)
-            if not result.allowed:
-                return False, "preflight blocked"
-            if not result.output:
-                return False, "BthRadio class not available"
-        return True, ""
-
-    def _parse_install_app(self, issue_text):
-        text = issue_text.strip()
-        lowered = text.lower()
-        keywords = ["install", "download", "setup", "get"]
-        for keyword in keywords:
-            if keyword in lowered:
-                parts = text.split(keyword, 1)
-                if len(parts) == 2:
-                    app = parts[1].strip(" .")
-                    if app:
-                        return app
+    def _select_sop(self, rag_matches):
+        if not rag_matches:
+            return ""
+        top = rag_matches[0]
+        if getattr(top, "score", 0) >= 0.2:
+            return f"{top.conversation_id}: {top.issue} -> {top.response}"
         return ""
 
     def _rag_keywords(self, issue_text):
@@ -647,107 +501,52 @@ class FixPlannerAgent:
 
     def propose(self, issue_text, diagnosis):
         issue_type = diagnosis.issue_type
-        commands = self._fix_commands(
-            issue_type, diagnosis.install_app, diagnosis, diagnosis.fix_stage
-        )
-        summary = self._summarize(issue_text, issue_type, diagnosis, commands)
+        commands, summary = self._fix_plan(issue_text, diagnosis)
         return FixPlan(issue_type=issue_type, summary=summary, commands=commands)
 
-    def _fix_commands(self, issue_type, install_app, diagnosis, fix_stage):
-        if issue_type == "disk_space":
-            return [
-                "Remove-Item $env:TEMP\\* -Recurse -Force -ErrorAction SilentlyContinue",
-                "Clear-RecycleBin -Force",
-            ]
-        if issue_type == "network":
-            return self._network_fix_commands(diagnosis, fix_stage)
-        if issue_type == "bluetooth":
-            return self._bluetooth_fix_commands(diagnosis, fix_stage)
-        if issue_type == "install_app" and install_app:
-            return [
-                f'winget install --name "{install_app}" --accept-package-agreements --accept-source-agreements',
-            ]
-        return []
-
-    def _summarize(self, issue_text, issue_type, diagnosis, commands):
+    def _fix_plan(self, issue_text, diagnosis):
+        if not self.llm_helper.available():
+            return [], "LLM unavailable; unable to generate a fix script."
         rag_text = ""
         if diagnosis.rag_matches:
             top = diagnosis.rag_matches[0]
-            rag_text = f"Knowledge base ({top.conversation_id}): {top.response}"
+            rag_text = f"SOP ({top.conversation_id}): {top.response}"
         web_text = ""
-        if diagnosis.issue_type != "system_info" and diagnosis.web_results:
+        if diagnosis.web_results:
             top_web = diagnosis.web_results[0]
             web_text = f"Web source: {top_web.title} ({top_web.url})"
+        system_prompt = (
+            "You are a Windows support agent. Propose a safe resolution script based on diagnostics. "
+            "Return JSON only with keys: summary, commands. "
+            "The summary must be short, user-friendly, and in passive voice only. "
+            "Commands must be PowerShell commands for remediation; avoid destructive actions."
+        )
+        user_prompt = (
+            f"Issue: {issue_text}\nType: {diagnosis.issue_type}\nFindings: {diagnosis.findings}\n"
+            f"{rag_text}\n{web_text}\nFix stage: {diagnosis.fix_stage}\n"
+            "Return JSON with summary and commands."
+        )
+        response = self.llm_helper.generate(system_prompt, user_prompt)
+        payload = self._extract_json(response)
+        if not payload:
+            self.llm_helper.logger.info(
+                "LLM fix plan parse failed. Raw response: %s",
+                (response or "")[:1200],
+            )
+        summary = (payload.get("summary") or "").strip()
+        commands = []
+        for item in payload.get("commands", []) or []:
+            if isinstance(item, dict):
+                cmd = (item.get("command") or "").strip()
+            else:
+                cmd = str(item).strip()
+            if cmd:
+                commands.append(cmd)
         if not commands:
-            return self._answer_question(issue_text, diagnosis)
-        if self.llm_helper.available():
-            system_prompt = (
-                "You are a Windows support agent. Propose a concise fix plan for the user."
-            )
-            command_text = "\n".join(commands) if commands else "No commands."
-            user_prompt = (
-                f"Issue: {issue_text}\nType: {issue_type}\nFindings: {diagnosis.findings}\n"
-                f"{rag_text}\n{web_text}\nCommands:\n{command_text}\n"
-                "Summarize the fix plan and request confirmation."
-            )
-            summary = self.llm_helper.generate(system_prompt, user_prompt)
-            if summary:
-                return summary
-        if issue_type == "disk_space":
-            return "Proposed fix: clear temp files and recycle bin to free space. Apply?"
-        if issue_type == "network":
-            cause = self._network_root_cause(diagnosis)
-            fix_hint = "Proposed fix: reset DNS and network stack, then restart Wi-Fi service. Apply?"
-            if diagnosis.fix_stage == 2:
-                fix_hint = "Proposed fix: enable Wi-Fi adapter and renew IP. Apply?"
-            if diagnosis.fix_stage >= 3:
-                fix_hint = "Proposed fix: cycle Wi-Fi adapter and restart network services. Apply?"
-            parts = []
-            if cause:
-                parts.append(f"Likely cause: {cause}")
-            parts.append(fix_hint)
-            return "\n".join(parts)
-        if issue_type == "bluetooth":
-            diagnosis_summary = self._bluetooth_summary(diagnosis)
-            root_cause = self._bluetooth_root_cause(diagnosis)
-            fix_hint = (
-                "Proposed fix: restart Bluetooth service, cycle the adapter, and rescan devices. Apply?"
-            )
-            if diagnosis.fix_stage >= 4:
-                fix_hint = (
-                    "Proposed fix: remove and rescan Bluetooth device (admin may be required). Apply?"
-                )
-            parts = []
-            if diagnosis_summary:
-                parts.append(diagnosis_summary)
-            if root_cause:
-                parts.append(f"Likely cause: {root_cause}")
-            parts.append(fix_hint)
-            return "\n".join(parts)
-        if issue_type == "install_app":
-            if not diagnosis.install_app:
-                return "Please specify the app name you want to install."
-            if "office" in diagnosis.install_app.lower():
-                return (
-                    "Proposed install: use winget to install Microsoft Office. "
-                    "Note: desktop Office may require a subscription/license to activate. Apply?"
-                )
-            return f'Proposed install: use winget to install "{diagnosis.install_app}". Apply?'
-        if diagnosis.blocked_commands:
-            return self._handle_blocked(diagnosis)
-        return self._answer_question(issue_text, diagnosis)
-
-    def _handle_blocked(self, diagnosis):
-        alternatives = []
-        for cmd in diagnosis.blocked_commands:
-            if "Get-ComputerInfo" in cmd:
-                alternatives.append("Get-CimInstance Win32_OperatingSystem")
-            if "Get-NetIPAddress" in cmd:
-                alternatives.append("ipconfig")
-        if alternatives:
-            alt_text = "; ".join(alternatives)
-            return f"Some diagnostics were blocked. Try safe alternatives: {alt_text}."
-        return "Some diagnostics were blocked by policy. Escalate to a human for approval."
+            return [], self._answer_question(issue_text, diagnosis)
+        if summary:
+            return commands, summary
+        return commands, "Proposed fix script ready. Apply?"
 
     def _answer_question(self, issue_text, diagnosis):
         normalized = issue_text.lower()
@@ -807,6 +606,20 @@ class FixPlannerAgent:
                 diagnosis.issue_type, issue_text, formatted, web_text
             )
         return "I couldn't find a direct answer. Try rephrasing the question."
+
+    def _extract_json(self, text):
+        if not text:
+            return {}
+        try:
+            return json.loads(text)
+        except Exception:
+            match = re.search(r"\{.*\}", text, re.S)
+            if not match:
+                return {}
+            try:
+                return json.loads(match.group(0))
+            except Exception:
+                return {}
 
     def _extract_answer(self, normalized_question, diagnosis):
         outputs = []
@@ -1037,109 +850,6 @@ class FixPlannerAgent:
             return "\n".join(lines)
         return f"Recommended steps: {rag_text}"
 
-    def _bluetooth_fix_commands(self, diagnosis, fix_stage):
-        commands = []
-        status, instance_id, service_status = self._parse_bluetooth_state(diagnosis)
-        stage = max(1, min(fix_stage, 4))
-        if stage == 1:
-            if service_status and service_status.lower() != "running":
-                commands.append("Start-Service bthserv")
-            commands.append("Restart-Service bthserv")
-        if stage == 2:
-            if instance_id and status and status.lower() in ("disabled", "error", "unknown"):
-                commands.append(f'Disable-PnpDevice -InstanceId "{instance_id}" -Confirm:$false')
-                commands.append(f'Enable-PnpDevice -InstanceId "{instance_id}" -Confirm:$false')
-            commands.append("pnputil /scan-devices")
-        if stage == 3:
-            commands.extend(
-                [
-                    "Stop-Service bthserv -Force",
-                    "Start-Service bthserv",
-                    "Restart-Service bthserv",
-                ]
-            )
-        if stage == 4:
-            # Stage 4: driver refresh attempt (admin likely required)
-            if instance_id:
-                commands.extend(
-                    [
-                        f'pnputil /remove-device "{instance_id}"',
-                        "pnputil /scan-devices",
-                    ]
-                )
-        return commands
-
-    def _network_fix_commands(self, diagnosis, fix_stage):
-        stage = max(1, min(fix_stage, 4))
-        if stage == 1:
-            return [
-                "ipconfig /flushdns",
-                "netsh winsock reset",
-                "netsh int ip reset",
-                "Restart-Service WlanSvc",
-            ]
-        if stage == 2:
-            return [
-                "Enable-NetAdapter -Name \"Wi-Fi\" -Confirm:$false",
-                "ipconfig /release",
-                "ipconfig /renew",
-            ]
-        if stage == 3:
-            return [
-                "Disable-NetAdapter -Name \"Wi-Fi\" -Confirm:$false",
-                "Enable-NetAdapter -Name \"Wi-Fi\" -Confirm:$false",
-                "Restart-Service WlanSvc",
-            ]
-        return [
-            "netsh int ip reset",
-            "netsh winsock reset",
-        ]
-
-    def _network_root_cause(self, diagnosis):
-        for result in diagnosis.command_results:
-            output = (result.output or "").lower()
-            if "wifi" in output and "disabled" in output:
-                return "Wi-Fi adapter is disabled"
-            if "there is no wireless interface" in output:
-                return "Wireless adapter not detected"
-            if "media disconnected" in output:
-                return "No active network connection"
-        return ""
-
-    def _bluetooth_summary(self, diagnosis):
-        status, _, service_status = self._parse_bluetooth_state(diagnosis)
-        parts = []
-        if status:
-            parts.append(f"Adapter status: {status}")
-        if service_status:
-            parts.append(f"Bluetooth service: {service_status}")
-        return " | ".join(parts)
-
-    def _bluetooth_root_cause(self, diagnosis):
-        status, _, service_status = self._parse_bluetooth_state(diagnosis)
-        if status and status.lower() in ("error", "disabled", "unknown"):
-            return "Bluetooth adapter is not healthy"
-        if service_status and service_status.lower() != "running":
-            return "Bluetooth service is not running"
-        return ""
-
-    def _parse_bluetooth_state(self, diagnosis=None):
-        status = ""
-        instance_id = ""
-        service_status = ""
-        results = diagnosis.command_results if diagnosis else []
-        for result in results:
-            if "Get-PnpDevice -Class Bluetooth" in result.command and result.output:
-                for line in result.output.splitlines():
-                    if line.lower().startswith("status"):
-                        status = line.split(":", 1)[1].strip()
-                    if line.lower().startswith("instanceid"):
-                        instance_id = line.split(":", 1)[1].strip()
-            if "Get-Service bthserv" in result.command and result.output:
-                for line in result.output.splitlines():
-                    if line.lower().startswith("status"):
-                        service_status = line.split(":", 1)[1].strip()
-        return status, instance_id, service_status
 
     def _is_system_info_query(self, normalized_question):
         if "os" in normalized_question and ("build" in normalized_question or "version" in normalized_question):
@@ -1183,23 +893,7 @@ class ExecutorAgent:
         )
 
     def _verify(self, issue_type):
-        if issue_type == "bluetooth":
-            return self._verify_bluetooth()
-        return True, "No verification required."
-
-    def _verify_bluetooth(self):
-        adapter = self.runner.run(
-            "Import-Module PnpDevice -ErrorAction SilentlyContinue; "
-            "Get-PnpDevice -Class Bluetooth | Select-Object Status | Format-List"
-        )
-        service = self.runner.run(
-            "Get-Service bthserv | Select-Object Status | Format-List"
-        )
-        adapter_ok = "ok" in (adapter.output or "").lower()
-        service_ok = "running" in (service.output or "").lower()
-        if adapter_ok and service_ok:
-            return True, "Bluetooth verified: adapter OK and service running."
-        return False, "Bluetooth still not healthy after fix attempt."
+        return True, "Verification skipped; please confirm the issue is resolved."
 
 
 def build_agents(allowlist_path, denylist_path, logger):
@@ -1211,7 +905,7 @@ def build_agents(allowlist_path, denylist_path, logger):
     cache_path = os.path.join(base_dir, "..", "tech_support_dataset.vectors.pkl")
     rag = TechSupportRAG(csv_path, cache_path=cache_path, require_cache=True)
     web_search = WebSearch()
-    orchestrator = OrchestratorAgent()
+    orchestrator = OrchestratorAgent(llm_helper)
     research = ResearchAgent(rag, web_search)
     action = ActionAgent(runner)
     gatekeeper = GatekeeperAgent(llm_helper)

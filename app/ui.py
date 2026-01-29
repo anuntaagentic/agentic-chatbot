@@ -7,15 +7,14 @@ from .agents import build_agents
 from .logging_utils import get_log_path, setup_logger
 
 
-class DiagnosisWorker(QtCore.QObject):
-    finished = QtCore.Signal(object, object)
+class DiagnosticPlanWorker(QtCore.QObject):
+    finished = QtCore.Signal(object)
     log_line = QtCore.Signal(str)
     error = QtCore.Signal(str)
 
-    def __init__(self, diagnosis_agent, fix_planner, issue_text, fix_stage):
+    def __init__(self, diagnosis_agent, issue_text, fix_stage):
         super().__init__()
         self.diagnosis_agent = diagnosis_agent
-        self.fix_planner = fix_planner
         self.issue_text = issue_text
         self.fix_stage = fix_stage
 
@@ -24,13 +23,39 @@ class DiagnosisWorker(QtCore.QObject):
             orchestrator = getattr(self.diagnosis_agent, "orchestrator", None)
             if orchestrator is not None:
                 orchestrator.fix_stage = self.fix_stage
-            diagnosis = self.diagnosis_agent.run(self.issue_text)
+            plan = self.diagnosis_agent.prepare_plan(self.issue_text)
+            self.finished.emit(plan)
+        except Exception as exc:
+            self.error.emit(str(exc))
+
+
+class DiagnosisWorker(QtCore.QObject):
+    finished = QtCore.Signal(object, object)
+    log_line = QtCore.Signal(object)
+    error = QtCore.Signal(str)
+
+    def __init__(self, diagnosis_agent, fix_planner, issue_text, fix_stage, plan):
+        super().__init__()
+        self.diagnosis_agent = diagnosis_agent
+        self.fix_planner = fix_planner
+        self.issue_text = issue_text
+        self.fix_stage = fix_stage
+        self.plan = plan
+
+    def run(self):
+        try:
+            orchestrator = getattr(self.diagnosis_agent, "orchestrator", None)
+            if orchestrator is not None:
+                orchestrator.fix_stage = self.fix_stage
+            diagnosis = self.diagnosis_agent.execute(self.issue_text, self.plan)
             for result in diagnosis.command_results:
-                if result.allowed:
-                    summary = result.output or result.error or "No output."
-                else:
-                    summary = result.error
-                self.log_line.emit(f"{result.command}\n{summary}\n")
+                self.log_line.emit(
+                    {
+                        "command": result.command,
+                        "output": result.output or result.error or "No output.",
+                        "allowed": result.allowed,
+                    }
+                )
             plan = self.fix_planner.propose(self.issue_text, diagnosis)
             self.finished.emit(diagnosis, plan)
         except Exception as exc:
@@ -39,7 +64,7 @@ class DiagnosisWorker(QtCore.QObject):
 
 class ExecuteWorker(QtCore.QObject):
     finished = QtCore.Signal(object)
-    log_line = QtCore.Signal(str)
+    log_line = QtCore.Signal(object)
     error = QtCore.Signal(str)
 
     def __init__(self, executor, fix_plan):
@@ -51,11 +76,13 @@ class ExecuteWorker(QtCore.QObject):
         try:
             result = self.executor.apply(self.fix_plan)
             for command_result in result.command_results:
-                if command_result.allowed:
-                    summary = command_result.output or command_result.error or "No output."
-                else:
-                    summary = command_result.error
-                self.log_line.emit(f"{command_result.command}\n{summary}\n")
+                self.log_line.emit(
+                    {
+                        "command": command_result.command,
+                        "output": command_result.output or command_result.error or "No output.",
+                        "allowed": command_result.allowed,
+                    }
+                )
             self.finished.emit(result)
         except Exception as exc:
             self.error.emit(str(exc))
@@ -82,6 +109,7 @@ class MainWindow(QtWidgets.QMainWindow):
         ) = build_agents(allowlist_path, denylist_path, logger)
 
         self.current_fix_plan = None
+        self.current_diagnostic_plan = None
         self.is_dark_theme = False
         self.last_issue_text = ""
         self.fix_stage = 1
@@ -142,6 +170,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.apply_button = QtWidgets.QPushButton("Apply Fix")
         self.apply_button.setEnabled(False)
         self.apply_button.clicked.connect(self._on_apply)
+        self.run_diag_button = QtWidgets.QPushButton("Run Diagnostics")
+        self.run_diag_button.setEnabled(False)
+        self.run_diag_button.clicked.connect(self._on_run_diagnostics)
 
         header_row = QtWidgets.QHBoxLayout()
         header_row.addWidget(title)
@@ -162,6 +193,7 @@ class MainWindow(QtWidgets.QMainWindow):
         layout.addWidget(subtitle)
         layout.addWidget(self.chat_view)
         layout.addLayout(input_row)
+        layout.addWidget(self.run_diag_button)
         layout.addWidget(self.apply_button)
         return panel
 
@@ -198,20 +230,91 @@ class MainWindow(QtWidgets.QMainWindow):
         layout.addWidget(self.sources_view)
         return panel
 
-    def _append_chat(self, who, message):
+    def _append_chat(self, who, message, is_html=False):
         bubble_color = "#2f6fec" if who == "You" else "#ffffff"
         text_color = "#ffffff" if who == "You" else "#1f2937"
         justify = "flex-end" if who == "You" else "flex-start"
+        if who == "You":
+            content = message
+        else:
+            content = message if is_html else f"<pre style='margin:0;'>{message}</pre>"
         bubble = (
             f"<div style='display:flex; justify-content:{justify}; margin:8px 0;'>"
             f"<span style='display:inline-block; padding:10px 12px; "
             f"border-radius:14px; background:{bubble_color}; color:{text_color}; "
-            f"max-width:80%;'>{message}</span></div>"
+            f"max-width:85%;'>{content}</span></div>"
         )
         self.chat_view.append(bubble)
 
     def _append_log(self, message):
+        if isinstance(message, dict):
+            self._append_log_command(message)
+            return
         self.log_view.append(message)
+
+    def _append_log_command(self, payload):
+        command = payload.get("command", "")
+        output = payload.get("output", "")
+        allowed = payload.get("allowed", True)
+        status_color = "#34d399" if allowed else "#f87171"
+        card = (
+            "<div style='margin:10px 0; padding:10px; border-radius:10px; "
+            "background:#0f172a; color:#e5e7eb;'>"
+            f"<div style='font-weight:600; color:{status_color}; margin-bottom:4px;'>"
+            f"{'ALLOWED' if allowed else 'BLOCKED'}</div>"
+            "<div style='font-weight:600; color:#93c5fd;'>Command</div>"
+            f"<pre style='white-space:pre-wrap; margin:6px 0 10px 0;'>{command}</pre>"
+            "<div style='font-weight:600; color:#a7f3d0;'>Output</div>"
+            f"<pre style='white-space:pre-wrap; margin:6px 0 0 0;'>{output}</pre>"
+            "</div>"
+        )
+        self.log_view.append(card)
+
+    def _append_log_script(self, title, commands, tone="#fbbf24"):
+        if not commands:
+            return
+        command_text = "\n".join(commands)
+        block = (
+            "<div style='margin:10px 0; padding:10px; border-radius:10px; "
+            "background:#111827; color:#e5e7eb;'>"
+            f"<div style='font-weight:700; color:{tone}; margin-bottom:6px;'>{title}</div>"
+            f"<pre style='white-space:pre-wrap; margin:0;'>{command_text}</pre>"
+            "</div>"
+        )
+        self.log_view.append(block)
+
+    def _assistant_format(self, summary, bullets=None, table=None, code_sections=None):
+        parts = []
+        if summary:
+            parts.append(
+                "<div style='margin-bottom:8px; font-weight:600;'>Summary</div>"
+                f"<div style='margin-bottom:10px;'>{summary}</div>"
+            )
+        if bullets:
+            items = "".join([f"<li>{item}</li>" for item in bullets])
+            parts.append(f"<ul style='margin:0 0 10px 16px;'>{items}</ul>")
+        if table:
+            rows = []
+            for row in table:
+                rows.append(
+                    "<tr>"
+                    f"<td style='padding:4px 8px; font-weight:600;'>{row[0]}</td>"
+                    f"<td style='padding:4px 8px;'>{row[1]}</td>"
+                    "</tr>"
+                )
+            parts.append(
+                "<table style='width:100%; border-collapse:collapse; margin-bottom:10px;'>"
+                + "".join(rows)
+                + "</table>"
+            )
+        if code_sections:
+            for title, code in code_sections:
+                parts.append(
+                    f"<div style='font-weight:600; margin:8px 0 6px 0;'>{title}</div>"
+                    f"<pre style='white-space:pre-wrap; background:#0f172a; color:#e5e7eb; "
+                    f"padding:8px; border-radius:8px; margin:0;'>{code}</pre>"
+                )
+        return "".join(parts)
 
     def _section_label(self, text):
         label = QtWidgets.QLabel(text)
@@ -438,6 +541,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.input_box.setEnabled(not busy)
         if busy:
             self.apply_button.setEnabled(False)
+            self.run_diag_button.setEnabled(False)
 
     def _on_send(self):
         issue_text = self.input_box.text().strip()
@@ -447,35 +551,36 @@ class MainWindow(QtWidgets.QMainWindow):
         self.last_issue_text = issue_text
         self.fix_stage = 1
         self.retry_mode = False
-        self._start_diagnosis(issue_text)
+        self.current_diagnostic_plan = None
+        self._start_plan(issue_text)
 
-    def _start_diagnosis(self, issue_text):
+    def _start_plan(self, issue_text):
         self._append_chat("You", issue_text)
-        self._append_chat("Assistant", "Running diagnostics...")
-        self._append_log("Starting diagnostics...")
+        self._append_chat("Assistant", "Preparing diagnostics plan...")
+        self._append_log("Preparing diagnostics plan...")
         if hasattr(self, "sources_view"):
             self.sources_view.clear()
         self._set_busy(True)
 
-        self.diagnosis_thread = QtCore.QThread()
-        self.diagnosis_worker = DiagnosisWorker(
-            self.diagnosis_agent, self.fix_planner, issue_text, self.fix_stage
+        self.plan_thread = QtCore.QThread()
+        self.plan_worker = DiagnosticPlanWorker(
+            self.diagnosis_agent, issue_text, self.fix_stage
         )
-        self.diagnosis_worker.moveToThread(self.diagnosis_thread)
-        self.diagnosis_thread.started.connect(self.diagnosis_worker.run)
-        self.diagnosis_worker.finished.connect(self._on_diagnosis_complete)
-        self.diagnosis_worker.log_line.connect(self._append_log)
-        self.diagnosis_worker.error.connect(self._on_worker_error)
-        self.diagnosis_worker.finished.connect(self.diagnosis_thread.quit)
-        self.diagnosis_worker.finished.connect(self.diagnosis_worker.deleteLater)
-        self.diagnosis_thread.finished.connect(self.diagnosis_thread.deleteLater)
-        self.diagnosis_thread.start()
+        self.plan_worker.moveToThread(self.plan_thread)
+        self.plan_thread.started.connect(self.plan_worker.run)
+        self.plan_worker.finished.connect(self._on_plan_complete)
+        self.plan_worker.error.connect(self._on_worker_error)
+        self.plan_worker.finished.connect(self.plan_thread.quit)
+        self.plan_worker.finished.connect(self.plan_worker.deleteLater)
+        self.plan_thread.finished.connect(self.plan_thread.deleteLater)
+        self.plan_thread.start()
 
     def _on_diagnosis_complete(self, diagnosis, plan):
         self._set_busy(False)
         self.current_fix_plan = plan
         self.retry_mode = False
         self.apply_button.setText("Apply Fix")
+        self.run_diag_button.setEnabled(False)
         sources_lines = []
         if diagnosis.rag_matches:
             sources_lines.append("Knowledge base sources:")
@@ -500,16 +605,34 @@ class MainWindow(QtWidgets.QMainWindow):
             self._append_log(f"Web error: {diagnosis.web_error}")
         if diagnosis.web_count == 0:
             self._append_log("Web result count: 0")
-        if diagnosis.issue_type == "system_info":
-            self._append_chat("Assistant", plan.summary)
-        else:
-            cause, fix = self._extract_cause_and_fix(plan.summary)
-            if cause:
-                self._append_chat("Assistant", f"Problem: {cause}")
+        findings_msg = self._assistant_format(summary=diagnosis.findings)
+        self._append_chat("Assistant", findings_msg, is_html=True)
+        if plan.summary:
+            if diagnosis.issue_type == "system_info":
+                self._append_chat(
+                    "Assistant",
+                    self._assistant_format(summary=plan.summary),
+                    is_html=True,
+                )
             else:
-                self._append_chat("Assistant", "Problem identified from diagnostics.")
-            if fix:
-                self._append_chat("Assistant", f"Planned fix: {fix}")
+                cause, fix = self._extract_cause_and_fix(plan.summary)
+                bullets = []
+                if cause:
+                    bullets.append(f"Likely cause: {cause}")
+                if fix:
+                    bullets.append(f"Proposed fix: {fix}")
+                if not bullets:
+                    bullets = [plan.summary]
+                script_commands = plan.commands or []
+                message = self._assistant_format(
+                    summary="Fix plan prepared.",
+                    bullets=bullets,
+                    code_sections=[("Resolution script (preview)", "\n".join(script_commands))]
+                    if script_commands
+                    else None,
+                )
+                self._append_chat("Assistant", message, is_html=True)
+                self._append_log_script("Resolution script (preview)", script_commands, tone="#a78bfa")
         self._append_log("Diagnostics complete.")
         if plan.commands:
             self.apply_button.setEnabled(True)
@@ -518,6 +641,102 @@ class MainWindow(QtWidgets.QMainWindow):
 
         if self.auto_fix_in_progress and plan.commands:
             self._auto_apply_fix()
+
+    def _on_plan_complete(self, plan):
+        self._set_busy(False)
+        self.current_diagnostic_plan = plan
+        self.current_fix_plan = None
+        self.apply_button.setEnabled(False)
+        sources_lines = []
+        if plan.rag_matches:
+            sources_lines.append("SOP sources:")
+            for match in plan.rag_matches[:3]:
+                sources_lines.append(
+                    f"- {match.conversation_id} | {match.issue} (score {match.score:.2f})"
+                )
+        if plan.web_results:
+            if sources_lines:
+                sources_lines.append("")
+            sources_lines.append("Web sources:")
+            for result in plan.web_results[:3]:
+                sources_lines.append(f"- {result.title} | {result.url}")
+        if not sources_lines:
+            sources_lines = ["Sources: none"]
+        self.sources_view.setPlainText("\n".join(sources_lines))
+        if plan.web_query:
+            self._append_log(f"Web query: {plan.web_query}")
+        if plan.web_error:
+            self._append_log(f"Web error: {plan.web_error}")
+        if plan.web_count == 0:
+            self._append_log("Web result count: 0")
+        bullets = [step.description for step in plan.plan_steps[:6]] if plan.plan_steps else []
+        script_commands = [step.command for step in plan.plan_steps]
+        message = self._assistant_format(
+            summary=plan.summary,
+            bullets=bullets,
+            code_sections=[("Diagnostic script (preview)", "\n".join(script_commands))]
+            if script_commands
+            else None,
+        )
+        self._append_chat("Assistant", message, is_html=True)
+        self._append_log_script("Diagnostic script (preview)", script_commands)
+        if plan.is_chat:
+            self._append_log("Chat response delivered. No diagnostics required.")
+            self.run_diag_button.setEnabled(False)
+            return
+        if not plan.plan_steps:
+            self._append_chat(
+                "Assistant",
+                "No diagnostic commands were generated. Check LLM availability or refine the issue.",
+            )
+            self.run_diag_button.setEnabled(False)
+            return
+        self._append_log("Diagnostic plan ready. Awaiting approval.")
+        self.run_diag_button.setEnabled(True)
+        confirm = QtWidgets.QMessageBox.question(
+            self,
+            "Run Diagnostics",
+            "Run the diagnostic script now?",
+            QtWidgets.QMessageBox.StandardButton.Yes
+            | QtWidgets.QMessageBox.StandardButton.No,
+        )
+        if confirm == QtWidgets.QMessageBox.StandardButton.Yes:
+            self._start_diagnosis_execution()
+        else:
+            self._append_chat(
+                "Assistant",
+                "Diagnostics not run. Click Run Diagnostics when you're ready.",
+            )
+
+    def _start_diagnosis_execution(self):
+        if not self.current_diagnostic_plan:
+            return
+        self._append_chat("Assistant", "Running diagnostics...")
+        self._append_log("Starting diagnostics...")
+        self._set_busy(True)
+
+        self.diagnosis_thread = QtCore.QThread()
+        self.diagnosis_worker = DiagnosisWorker(
+            self.diagnosis_agent,
+            self.fix_planner,
+            self.last_issue_text,
+            self.fix_stage,
+            self.current_diagnostic_plan,
+        )
+        self.diagnosis_worker.moveToThread(self.diagnosis_thread)
+        self.diagnosis_thread.started.connect(self.diagnosis_worker.run)
+        self.diagnosis_worker.finished.connect(self._on_diagnosis_complete)
+        self.diagnosis_worker.log_line.connect(self._append_log)
+        self.diagnosis_worker.error.connect(self._on_worker_error)
+        self.diagnosis_worker.finished.connect(self.diagnosis_thread.quit)
+        self.diagnosis_worker.finished.connect(self.diagnosis_worker.deleteLater)
+        self.diagnosis_thread.finished.connect(self.diagnosis_thread.deleteLater)
+        self.diagnosis_thread.start()
+
+    def _on_run_diagnostics(self):
+        if not self.current_diagnostic_plan:
+            return
+        self._start_diagnosis_execution()
 
     def _on_apply(self):
         if self.retry_mode and self.last_issue_text:
@@ -569,7 +788,7 @@ class MainWindow(QtWidgets.QMainWindow):
                             "Fix attempt failed. Trying the next method...",
                         )
                         self._append_log("Auto-retrying with next fix stage...")
-                        self._start_diagnosis(self.last_issue_text)
+                        self._start_plan(self.last_issue_text)
                 else:
                     self._append_chat(
                         "Assistant",
@@ -589,8 +808,7 @@ class MainWindow(QtWidgets.QMainWindow):
                         "Some commands failed. See diagnostics for manual commands.",
                     )
                 self._append_log("Manual commands (failed):")
-                for cmd in failed:
-                    self._append_log(cmd)
+                self._append_log_script("Manual commands to run", failed, tone="#f97316")
 
     def _auto_apply_fix(self):
         self._append_chat("Assistant", "Applying fixes now...")

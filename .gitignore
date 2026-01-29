@@ -2,3 +2,4 @@ chatbotenv
 dist
 build
 AgenticWindowsHelper.exe
+.env
