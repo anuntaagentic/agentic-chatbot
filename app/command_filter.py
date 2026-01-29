@@ -5,7 +5,6 @@ from fnmatch import fnmatch
 
 class CommandFilter:
     def __init__(self, allowlist_path, denylist_path):
-        self.allow_patterns = self._load_patterns(allowlist_path)
         self.deny_patterns = self._load_patterns(denylist_path)
 
     def _load_patterns(self, path):
@@ -18,9 +17,7 @@ class CommandFilter:
     def is_allowed(self, command):
         if self._matches(self.deny_patterns, command):
             return False, "Command blocked by denylist."
-        if self._matches(self.allow_patterns, command):
-            return True, ""
-        return False, "Command not in allowlist."
+        return True, ""
 
     def _matches(self, patterns, command):
         for pattern in patterns:

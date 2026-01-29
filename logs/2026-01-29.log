@@ -1,0 +1,1432 @@
+2026-01-29 17:25:58,086 INFO Loaded 5 env vars from .env
+2026-01-29 17:25:58,086 INFO ENV GROQ_API_KEY=gsk***on (overrode)
+2026-01-29 17:25:58,086 INFO ENV GROQ_BASE_URL=https://api.groq.com/openai/v1 (set)
+2026-01-29 17:25:58,086 INFO ENV GROQ_MODEL=openai/gpt-oss-120b (set)
+2026-01-29 17:25:58,086 INFO ENV TAVILY_API_KEY=tvl***6d (set)
+2026-01-29 17:25:58,086 INFO ENV ENABLE_WEB_SEARCH=1 (set)
+2026-01-29 17:26:08,401 INFO LLM model 'openai/gpt-oss-120b' is not compatible with Groq base_url. Falling back.
+2026-01-29 17:26:09,867 INFO LLM call failed: Error code: 400 - {'error': {'message': 'The model `llama3-70b-8192` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.', 'type': 'invalid_request_error', 'code': 'model_decommissioned'}}
+2026-01-29 17:26:09,869 INFO LLM classification parse failed. Raw response: 
+2026-01-29 17:26:10,162 INFO LLM call failed: Error code: 400 - {'error': {'message': 'The model `llama3-70b-8192` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.', 'type': 'invalid_request_error', 'code': 'model_decommissioned'}}
+2026-01-29 17:26:10,162 INFO LLM diagnostics plan parse failed. Raw response: 
+2026-01-29 17:37:17,172 INFO Loaded 5 env vars from .env
+2026-01-29 17:37:17,172 INFO ENV GROQ_API_KEY=gsk***on (overrode)
+2026-01-29 17:37:17,172 INFO ENV GROQ_BASE_URL=https://api.groq.com/openai/v1 (set)
+2026-01-29 17:37:17,172 INFO ENV GROQ_MODEL=openai/gpt-oss-120b (set)
+2026-01-29 17:37:17,172 INFO ENV TAVILY_API_KEY=tvl***6d (set)
+2026-01-29 17:37:17,172 INFO ENV ENABLE_WEB_SEARCH=1 (set)
+2026-01-29 17:37:25,419 INFO LLM model 'openai/gpt-oss-120b' is not compatible with Groq base_url. Falling back.
+2026-01-29 17:37:26,938 INFO LLM call failed: Error code: 400 - {'error': {'message': 'The model `llama3-70b-8192` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.', 'type': 'invalid_request_error', 'code': 'model_decommissioned'}}
+2026-01-29 17:37:26,938 INFO LLM classification parse failed. Raw response: 
+2026-01-29 17:37:27,355 INFO LLM call failed: Error code: 400 - {'error': {'message': 'The model `llama3-70b-8192` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.', 'type': 'invalid_request_error', 'code': 'model_decommissioned'}}
+2026-01-29 17:37:27,355 INFO LLM diagnostics plan parse failed. Raw response: 
+2026-01-29 17:40:57,325 INFO Loaded 5 env vars from .env
+2026-01-29 17:41:05,804 INFO LLM model 'openai/gpt-oss-120b' is not compatible with Groq base_url. Falling back.
+2026-01-29 17:41:07,611 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:41:08,228 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:41:10,069 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:41:15,866 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:41:42,282 INFO RUN: Get-PnpDevice -Class Bluetooth | Select-Object FriendlyName, Status, DeviceID
+2026-01-29 17:41:43,476 INFO EXIT 0
+2026-01-29 17:41:43,476 INFO STDOUT: FriendlyName                           Status  DeviceID                                          
+------------                           ------  --------                                          
+Microsoft Bluetooth Enumerator         Unknown BTH\MS_BTHBRB\6&39FB3187&0&1                      
+Device Identification Service          Unknown BTHENUM\{00001200-0000-1000-8000-00805F9B34FB}_...
+Bluetooth Device (RFCOMM Protocol TDI) Unknown BTH\MS_RFCOMM\6&39FB3187&0&0                      
+OnePlus Buds Pro 2                     Unknown BTHENUM\DEV_286F4043A55D\7&1F9463FC&0&BLUETOOTH...
+OnePlus Buds Pro 2 Avrcp Transport     Unknown BTHENUM\{0000110C-0000-1000-8000-00805F9B34FB}_...
+OnePlus Buds Pro 2 Avrcp Transport     Unknown BTHENUM\{0000110E-0000-1000-8000-00805F9B34FB}_...
+Microsoft Bluetooth LE Enumerator      Unknown BTH\MS_BTHLE\6&39FB3187&0&3                       
+Intel(R) Wireless Bluetooth(R)         OK      USB\VID_8087&PID_0026\5&3A5E8465&0&10
+2026-01-29 17:41:43,476 INFO RUN: Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\BTHPORT' | Select-Object Start, ErrorControl
+2026-01-29 17:41:43,810 INFO EXIT 0
+2026-01-29 17:41:43,810 INFO STDOUT: Start ErrorControl
+----- ------------
+    3            1
+2026-01-29 17:41:45,318 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:41:46,520 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:41:47,867 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:41:49,399 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:41:59,663 INFO BLOCKED: Get-WindowsUpdateLog | Select-Object -Last 10 | Command not in allowlist.
+2026-01-29 17:41:59,663 INFO BLOCKED: Get-PnpDevice -Status Error | Where-Object { $_.Class -eq 'Bluetooth' } | Enable-PnpDevice -Confirm:$false | Command not in allowlist.
+2026-01-29 17:41:59,663 INFO BLOCKED: Start-Process ms-settings:network-troubleshoot | Command not in allowlist.
+2026-01-29 17:41:59,663 INFO BLOCKED: Get-Service -Name BthService | Set-Service -StartupType Automatic | Command not in allowlist.
+2026-01-29 17:43:16,025 INFO Loaded 5 env vars from .env
+2026-01-29 17:43:24,640 INFO LLM model 'openai/gpt-oss-120b' is not compatible with Groq base_url. Falling back.
+2026-01-29 17:43:26,404 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:43:26,904 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:43:28,871 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:43:32,523 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:43:35,422 INFO RUN: Get-PnpDevice -Class Bluetooth | Select-Object FriendlyName, Status, DeviceID
+2026-01-29 17:43:36,578 INFO EXIT 0
+2026-01-29 17:43:36,578 INFO STDOUT: FriendlyName                           Status  DeviceID                                                                
+------------                           ------  --------                                                                
+Microsoft Bluetooth Enumerator         Unknown BTH\MS_BTHBRB\6&39FB3187&0&1                                            
+Device Identification Service          Unknown BTHENUM\{00001200-0000-1000-8000-00805F9B34FB}_VID&000102B0_PID&0000\...
+Bluetooth Device (RFCOMM Protocol TDI) Unknown BTH\MS_RFCOMM\6&39FB3187&0&0                                            
+OnePlus Buds Pro 2                     Unknown BTHENUM\DEV_286F4043A55D\7&1F9463FC&0&BLUETOOTHDEVICE_286F4043A55D      
+OnePlus Buds Pro 2 Avrcp Transport     Unknown BTHENUM\{0000110C-0000-1000-8000-00805F9B34FB}_VID&000102B0_PID&0000\...
+OnePlus Buds Pro 2 Avrcp Transport     Unknown BTHENUM\{0000110E-0000-1000-8000-00805F9B34FB}_VID&000102B0_PID&0000\...
+Microsoft Bluetooth LE Enumerator      Unknown BTH\MS_BTHLE\6&39FB3187&0&3                                             
+Intel(R) Wireless Bluetooth(R)         Error   USB\VID_8087&PID_0026\5&3A5E8465&0&10
+2026-01-29 17:43:36,578 INFO RUN: Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\BTHPORT' | Select-Object Start, ErrorControl
+2026-01-29 17:43:36,902 INFO EXIT 0
+2026-01-29 17:43:36,902 INFO STDOUT: Start ErrorControl
+----- ------------
+    3            1
+2026-01-29 17:43:36,902 INFO RUN: Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Icons\{00000000-0000-0000-0000-000000000000}' | Select-Object '(Default)'
+2026-01-29 17:43:37,332 INFO EXIT 1
+2026-01-29 17:43:37,332 INFO STDERR: Get-ItemProperty : Cannot find path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell 
+Icons\{00000000-0000-0000-0000-000000000000}' because it does not exist.
+At line:1 char:1
++ Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersi ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (HKLM:\SOFTWARE\...0-000000000000}:String) [Get-ItemProperty], ItemNotFo 
+   undException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetItemPropertyCommand
+2026-01-29 17:43:37,332 INFO RUN: Get-PnpDevice -Class Bluetooth | Where-Object { $_.Status -ne 'OK' } | Select-Object FriendlyName, Status
+2026-01-29 17:43:38,551 INFO EXIT 0
+2026-01-29 17:43:38,551 INFO STDOUT: FriendlyName                           Status 
+------------                           ------ 
+Microsoft Bluetooth Enumerator         Unknown
+Device Identification Service          Unknown
+Bluetooth Device (RFCOMM Protocol TDI) Unknown
+OnePlus Buds Pro 2                     Unknown
+OnePlus Buds Pro 2 Avrcp Transport     Unknown
+OnePlus Buds Pro 2 Avrcp Transport     Unknown
+Microsoft Bluetooth LE Enumerator      Unknown
+Intel(R) Wireless Bluetooth(R)         Error
+2026-01-29 17:43:39,782 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:43:41,384 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:43:42,529 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:43:54,277 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:44:03,939 INFO RUN: Start-Service -Name Bthserv
+2026-01-29 17:44:04,212 INFO EXIT 0
+2026-01-29 17:44:04,212 INFO RUN: Get-PnpDevice -Class Bluetooth | Where-Object { $_.Status -eq 'Error' } | ForEach-Object { pnputil.exe -i -a $_.InstanceId }
+2026-01-29 17:44:05,388 INFO EXIT 0
+2026-01-29 17:44:05,388 INFO STDOUT: Microsoft PnP Utility
+
+Adding the driver package failed : Invalid INF passed as parameter.
+
+Total attempted:              0
+Number successfully imported: 0
+2026-01-29 17:44:05,388 INFO BLOCKED: Get-WindowsUpdateLog | Command not in allowlist.
+2026-01-29 17:44:05,388 INFO BLOCKED: Restart-Computer -Force | Command blocked by denylist.
+2026-01-29 17:47:13,508 INFO Loaded 5 env vars from .env
+2026-01-29 17:47:21,078 INFO LLM model 'openai/gpt-oss-120b' is not compatible with Groq base_url. Falling back.
+2026-01-29 17:47:22,960 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:47:23,565 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:47:25,968 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:47:28,033 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:47:30,859 INFO RUN: Get-NetAdapter -Name 'Bluetooth Network Connection' | Select-Object Name, Status
+2026-01-29 17:47:33,035 INFO EXIT 1
+2026-01-29 17:47:33,035 INFO STDERR: Get-NetAdapter : No MSFT_NetAdapter objects found with property 'Name' equal to 'Bluetooth Network Connection'.  
+Verify the value of the property and retry.
+At line:1 char:1
++ Get-NetAdapter -Name 'Bluetooth Network Connection' | Select-Object N ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Bluetooth Network Connection:String) [Get-NetAdapter], CimJobException
+    + FullyQualifiedErrorId : CmdletizationQuery_NotFound_Name,Get-NetAdapter
+2026-01-29 17:47:33,035 INFO RUN: Get-PnpDevice -Class Bluetooth | Where-Object { $_.Status -ne 'OK' } | Select-Object FriendlyName, Status
+2026-01-29 17:47:34,231 INFO EXIT 0
+2026-01-29 17:47:34,231 INFO STDOUT: FriendlyName                           Status 
+------------                           ------ 
+Microsoft Bluetooth Enumerator         Unknown
+Device Identification Service          Unknown
+Bluetooth Device (RFCOMM Protocol TDI) Unknown
+OnePlus Buds Pro 2                     Unknown
+OnePlus Buds Pro 2 Avrcp Transport     Unknown
+OnePlus Buds Pro 2 Avrcp Transport     Unknown
+Microsoft Bluetooth LE Enumerator      Unknown
+Intel(R) Wireless Bluetooth(R)         Error
+2026-01-29 17:47:35,956 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:47:37,043 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:47:38,110 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:47:39,198 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:47:59,947 INFO BLOCKED: Get-Service -Name bthserv | Set-Service -StartupType Automatic | Command not in allowlist.
+2026-01-29 17:47:59,947 INFO RUN: Get-PnpDevice -Class Bluetooth | Where-Object { $_.Status -ne 'OK' } | Disable-PnpDevice -Confirm:$false
+2026-01-29 17:48:03,096 INFO EXIT 1
+2026-01-29 17:48:03,096 INFO STDERR: Disable-PnpDevice : Generic failure 
+At line:1 char:72
++ ... ere-Object { $_.Status -ne 'OK' } | Disable-PnpDevice -Confirm:$false
++                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...8000-00805F...):ROOT\cimv2\Win32_PnPEntity) [Disable-Pn 
+   pDevice], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Disable-PnpDevice
+ 
+Disable-PnpDevice : Generic failure 
+At line:1 char:72
++ ... ere-Object { $_.Status -ne 'OK' } | Disable-PnpDevice -Confirm:$false
++                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...&39FB3187&0&0"):ROOT\cimv2\Win32_PnPEntity) [Disable-Pn 
+   pDevice], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Disable-PnpDevice
+ 
+Disable-PnpDevice : Generic failure 
+At line:1 char:72
++ ... ere-Object { $_.Status -ne 'OK' } | Disable-PnpDevice -Confirm:$false
++                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...8000-00805F...):ROOT\cimv2\Win32_PnPEntity) [Disable-Pn 
+   pDevice], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Disable-PnpDevice
+ 
+Disable-PnpDevice : Generic failure 
+At line:1 char:72
++ ... ere-Object { $_.Status -ne 'OK' } | Disable-PnpDevice -Confirm:$false
++                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...8000-00805F...):ROOT\cimv2\Win32_PnPEntity) [Disable-Pn 
+   pDevice], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Disable-PnpDevice
+ 
+Disable-PnpDevice : Generic failure 
+At line:1 char:72
++ ... ere-Object { $_.Status -ne 'OK' } | Disable-PnpDevice -Confirm:$false
++                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...&39FB3187&0&3"):ROOT\cimv2\Win32_PnPEntity) [Disable-Pn 
+   pDevice], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Disable-PnpDevice
+ 
+Disable-PnpDevice : Generic failure 
+At line:1 char:72
++ ... ere-Object { $_.Status -ne 'OK' } | Disable-PnpDevice -Confirm:$false
++                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...&39FB3187&0&1"):ROOT\cimv2\Win32_PnPEntity) [Disable-Pn 
+   pDevice], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Disable-PnpDevice
+ 
+Disable-PnpDevice : Generic failure 
+At line:1 char:72
++ ... ere-Object { $_.Status -ne 'OK' } | Disable-PnpDevice -Confirm:$false
++                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...F9463FC&0&B...):ROOT\cimv2\Win32_PnPEntity) [Disable-Pn 
+   pDevice], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Disable-PnpDevice
+2026-01-29 17:48:03,096 INFO RUN: Get-PnpDevice -Class Bluetooth | Where-Object { $_.Status -ne 'OK' } | Enable-PnpDevice -Confirm:$false
+2026-01-29 17:48:06,428 INFO EXIT 1
+2026-01-29 17:48:06,428 INFO STDERR: Enable-PnpDevice : Generic failure 
+At line:1 char:72
++ ... here-Object { $_.Status -ne 'OK' } | Enable-PnpDevice -Confirm:$false
++                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...&39FB3187&0&0"):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+ 
+Enable-PnpDevice : Generic failure 
+At line:1 char:72
++ ... here-Object { $_.Status -ne 'OK' } | Enable-PnpDevice -Confirm:$false
++                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...8000-00805F...):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+ 
+Enable-PnpDevice : Generic failure 
+At line:1 char:72
++ ... here-Object { $_.Status -ne 'OK' } | Enable-PnpDevice -Confirm:$false
++                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...8000-00805F...):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+ 
+Enable-PnpDevice : Generic failure 
+At line:1 char:72
++ ... here-Object { $_.Status -ne 'OK' } | Enable-PnpDevice -Confirm:$false
++                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...8000-00805F...):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+ 
+Enable-PnpDevice : Generic failure 
+At line:1 char:72
++ ... here-Object { $_.Status -ne 'OK' } | Enable-PnpDevice -Confirm:$false
++                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...&39FB3187&0&1"):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+ 
+Enable-PnpDevice : Generic failure 
+At line:1 char:72
++ ... here-Object { $_.Status -ne 'OK' } | Enable-PnpDevice -Confirm:$false
++                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...&39FB3187&0&3"):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+ 
+Enable-PnpDevice : Generic failure 
+At line:1 char:72
++ ... here-Object { $_.Status -ne 'OK' } | Enable-PnpDevice -Confirm:$false
++                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...F9463FC&0&B...):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+2026-01-29 17:48:06,428 INFO BLOCKED: Get-WindowsUpdateLog | Command not in allowlist.
+2026-01-29 17:48:06,428 INFO RUN: Get-NetAdapter | Where-Object { $_.Name -like '*Bluetooth*' } | Format-List Name,Status,LinkSpeed
+2026-01-29 17:48:08,070 INFO EXIT 0
+2026-01-29 17:48:08,993 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:48:09,537 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:48:11,564 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:48:15,200 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:48:17,128 INFO RUN: Get-PnpDevice -Class Bluetooth | Select-Object FriendlyName, Status
+2026-01-29 17:48:18,341 INFO EXIT 0
+2026-01-29 17:48:18,341 INFO STDOUT: FriendlyName                           Status 
+------------                           ------ 
+Microsoft Bluetooth Enumerator         Unknown
+Device Identification Service          Unknown
+Bluetooth Device (RFCOMM Protocol TDI) Unknown
+OnePlus Buds Pro 2                     Unknown
+OnePlus Buds Pro 2 Avrcp Transport     Unknown
+OnePlus Buds Pro 2 Avrcp Transport     Unknown
+Microsoft Bluetooth LE Enumerator      Unknown
+Intel(R) Wireless Bluetooth(R)         OK
+2026-01-29 17:48:18,341 INFO RUN: Get-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Services\BTHPORT\Parameters\Radio -Name RadioEnabled
+2026-01-29 17:48:18,659 INFO EXIT 1
+2026-01-29 17:48:18,659 INFO STDERR: Get-ItemProperty : Cannot find path 'HKLM:\SYSTEM\CurrentControlSet\Services\BTHPORT\Parameters\Radio' because it does 
+not exist.
+At line:1 char:1
++ Get-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Services\BTHPORT\Para ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (HKLM:\SYSTEM\Cu...arameters\Radio:String) [Get-ItemProperty], ItemNotFo 
+   undException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetItemPropertyCommand
+2026-01-29 17:48:22,648 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:48:30,014 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:48:37,441 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:48:45,490 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:48:45,492 INFO BLOCKED: Get-Service -Name bthserv | Start-Service | Command not in allowlist.
+2026-01-29 17:48:45,506 INFO RUN: Get-PnpDevice -Class Bluetooth | Disable-PnpDevice -Confirm:$false
+2026-01-29 17:48:48,777 INFO EXIT 1
+2026-01-29 17:48:48,777 INFO STDERR: Disable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Disable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...&39FB3187&0&0"):ROOT\cimv2\Win32_PnPEntity) [Disable-Pn 
+   pDevice], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Disable-PnpDevice
+ 
+Disable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Disable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...8000-00805F...):ROOT\cimv2\Win32_PnPEntity) [Disable-Pn 
+   pDevice], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Disable-PnpDevice
+ 
+Disable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Disable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...8000-00805F...):ROOT\cimv2\Win32_PnPEntity) [Disable-Pn 
+   pDevice], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Disable-PnpDevice
+ 
+Disable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Disable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...8000-00805F...):ROOT\cimv2\Win32_PnPEntity) [Disable-Pn 
+   pDevice], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Disable-PnpDevice
+ 
+Disable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Disable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...F9463FC&0&B...):ROOT\cimv2\Win32_PnPEntity) [Disable-Pn 
+   pDevice], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Disable-PnpDevice
+ 
+Disable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Disable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...&39FB3187&0&3"):ROOT\cimv2\Win32_PnPEntity) [Disable-Pn 
+   pDevice], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Disable-PnpDevice
+ 
+Disable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Disable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...&39FB3187&0&1"):ROOT\cimv2\Win32_PnPEntity) [Disable-Pn 
+   pDevice], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Disable-PnpDevice
+2026-01-29 17:48:48,777 INFO RUN: Get-PnpDevice -Class Bluetooth | Enable-PnpDevice -Confirm:$false
+2026-01-29 17:48:52,221 INFO EXIT 1
+2026-01-29 17:48:52,221 INFO STDERR: Enable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Enable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...8000-00805F...):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+ 
+Enable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Enable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...&39FB3187&0&3"):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+ 
+Enable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Enable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...&39FB3187&0&0"):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+ 
+Enable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Enable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...F9463FC&0&B...):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+ 
+Enable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Enable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...&39FB3187&0&1"):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+ 
+Enable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Enable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...8000-00805F...):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+ 
+Enable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Enable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...8000-00805F...):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+2026-01-29 17:48:52,221 INFO RUN: Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\BTHPORT\Parameters\Radio' -ErrorAction SilentlyContinue
+2026-01-29 17:48:52,575 INFO EXIT 1
+2026-01-29 17:48:52,575 INFO BLOCKED: Restart-Computer -Force | Command blocked by denylist.
+2026-01-29 17:48:53,316 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:48:53,970 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:49:00,909 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:49:17,892 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:49:22,237 INFO RUN: Get-PnpDevice -Class Bluetooth | Where-Object { $_.Status -ne 'OK' } | Select-Object FriendlyName, Status
+2026-01-29 17:49:23,402 INFO EXIT 0
+2026-01-29 17:49:23,402 INFO STDOUT: FriendlyName                           Status 
+------------                           ------ 
+Microsoft Bluetooth Enumerator         Unknown
+Device Identification Service          Unknown
+Bluetooth Device (RFCOMM Protocol TDI) Unknown
+OnePlus Buds Pro 2                     Unknown
+OnePlus Buds Pro 2 Avrcp Transport     Unknown
+OnePlus Buds Pro 2 Avrcp Transport     Unknown
+Microsoft Bluetooth LE Enumerator      Unknown
+2026-01-29 17:49:23,402 INFO RUN: Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Bluetooth\Settings' | Select-Object RadioEnabled
+2026-01-29 17:49:23,782 INFO EXIT 1
+2026-01-29 17:49:23,782 INFO STDERR: Get-ItemProperty : Cannot find path 'HKLM:\SYSTEM\CurrentControlSet\Control\Bluetooth\Settings' because it does not 
+exist.
+At line:1 char:1
++ Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Blueto ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (HKLM:\SYSTEM\Cu...etooth\Settings:String) [Get-ItemProperty], ItemNotFo 
+   undException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetItemPropertyCommand
+2026-01-29 17:49:23,782 INFO RUN: Get-PnpDevice -Class Bluetooth | ForEach-Object { Get-PowerSetting -DeviceInstanceId $_.InstanceId } | Select-Object SubGroupOf, PowerSettingValue
+2026-01-29 17:49:24,975 INFO EXIT 1
+2026-01-29 17:49:24,975 INFO STDERR: ForEach-Object : The term 'Get-PowerSetting' is not recognized as the name of a cmdlet, function, script file, or 
+operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try 
+again.
+At line:1 char:34
++ ... Bluetooth | ForEach-Object { Get-PowerSetting -DeviceInstanceId $_.In ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Get-PowerSetting:String) [ForEach-Object], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException,Microsoft.PowerShell.Commands.ForEachObjectCommand
+2026-01-29 17:49:24,975 INFO RUN: Get-Item -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Bluetooth' | Get-ChildItem | Select-Object Name, PSChildName
+2026-01-29 17:49:25,375 INFO EXIT 1
+2026-01-29 17:49:25,375 INFO STDERR: Get-Item : Cannot find path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Bluetooth' because it does not 
+exist.
+At line:1 char:1
++ Get-Item -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (HKLM:\SOFTWARE\...lorer\Bluetooth:String) [Get-Item], ItemNotFoundExcep 
+   tion
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetItemCommand
+2026-01-29 17:49:28,219 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:49:38,787 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:49:44,745 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:49:53,925 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:49:53,937 INFO BLOCKED: Get-Service -Name Bthserv | Select-Object Status | Command not in allowlist.
+2026-01-29 17:49:53,937 INFO RUN: Get-PnpDevice -Class Bluetooth | Enable-PnpDevice -Confirm:$false
+2026-01-29 17:49:57,278 INFO EXIT 1
+2026-01-29 17:49:57,278 INFO STDERR: Enable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Enable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...&39FB3187&0&3"):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+ 
+Enable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Enable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...8000-00805F...):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+ 
+Enable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Enable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...8000-00805F...):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+ 
+Enable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Enable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...F9463FC&0&B...):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+ 
+Enable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Enable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...8000-00805F...):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+ 
+Enable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Enable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...&39FB3187&0&0"):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+ 
+Enable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Enable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...&39FB3187&0&1"):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+2026-01-29 17:49:57,278 INFO BLOCKED: Get-WindowsUpdateLog | Command not in allowlist.
+2026-01-29 17:49:58,054 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:49:58,521 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:50:49,308 INFO Loaded 5 env vars from .env
+2026-01-29 17:55:52,550 INFO Loaded 5 env vars from .env
+2026-01-29 17:56:08,573 INFO Loaded 5 env vars from .env
+2026-01-29 17:56:20,632 INFO LLM model 'openai/gpt-oss-120b' is not compatible with Groq base_url. Falling back.
+2026-01-29 17:56:22,481 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:56:23,492 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:56:25,716 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:56:27,778 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:56:31,472 INFO RUN: Get-PnpDevice -Class Bluetooth | Format-Table FriendlyName,Status,InstanceId
+2026-01-29 17:56:32,710 INFO EXIT 0
+2026-01-29 17:56:32,717 INFO STDOUT: FriendlyName                           Status  InstanceId                                                              
+------------                           ------  ----------                                                              
+Microsoft Bluetooth Enumerator         Unknown BTH\MS_BTHBRB\6&39FB3187&0&1                                            
+Device Identification Service          Unknown BTHENUM\{00001200-0000-1000-8000-00805F9B34FB}_VID&000102B0_PID&0000\...
+Bluetooth Device (RFCOMM Protocol TDI) Unknown BTH\MS_RFCOMM\6&39FB3187&0&0                                            
+OnePlus Buds Pro 2                     Unknown BTHENUM\DEV_286F4043A55D\7&1F9463FC&0&BLUETOOTHDEVICE_286F4043A55D      
+OnePlus Buds Pro 2 Avrcp Transport     Unknown BTHENUM\{0000110C-0000-1000-8000-00805F9B34FB}_VID&000102B0_PID&0000\...
+OnePlus Buds Pro 2 Avrcp Transport     Unknown BTHENUM\{0000110E-0000-1000-8000-00805F9B34FB}_VID&000102B0_PID&0000\...
+Microsoft Bluetooth LE Enumerator      Unknown BTH\MS_BTHLE\6&39FB3187&0&3                                             
+Intel(R) Wireless Bluetooth(R)         Error   USB\VID_8087&PID_0026\5&3A5E8465&0&10
+2026-01-29 17:56:34,040 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:56:35,371 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:56:36,519 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:56:54,921 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:58:19,679 INFO BLOCKED: Get-WindowsUpdateLog | Select-String 'Bluetooth' | Command not in allowlist.
+2026-01-29 17:58:19,679 INFO BLOCKED: Get-EventLog -LogName System -Source 'Bluetooth' -Newest 20 | Command not in allowlist.
+2026-01-29 17:58:19,679 INFO RUN: Get-NetAdapterBluetooth | Format-List
+2026-01-29 17:58:19,987 INFO EXIT 1
+2026-01-29 17:58:19,987 INFO STDERR: Get-NetAdapterBluetooth : The term 'Get-NetAdapterBluetooth' is not recognized as the name of a cmdlet, function, 
+script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is 
+correct and try again.
+At line:1 char:1
++ Get-NetAdapterBluetooth | Format-List
++ ~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Get-NetAdapterBluetooth:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+2026-01-29 17:58:19,987 INFO BLOCKED: Get-BluetoothDevice -All | Format-List | Command not in allowlist.
+2026-01-29 17:58:19,987 INFO BLOCKED: Get-WindowsOptionalFeature -Online -FeatureName 'Bluetooth' | Format-List | Command not in allowlist.
+2026-01-29 17:58:20,842 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:58:21,755 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:58:23,558 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:58:25,587 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:58:27,760 INFO RUN: Get-PnpDevice -Class Bluetooth | Select-Object FriendlyName,Status
+2026-01-29 17:58:28,986 INFO EXIT 0
+2026-01-29 17:58:28,986 INFO STDOUT: FriendlyName                           Status 
+------------                           ------ 
+Microsoft Bluetooth Enumerator         Unknown
+Device Identification Service          Unknown
+Bluetooth Device (RFCOMM Protocol TDI) Unknown
+OnePlus Buds Pro 2                     Unknown
+OnePlus Buds Pro 2 Avrcp Transport     Unknown
+OnePlus Buds Pro 2 Avrcp Transport     Unknown
+Microsoft Bluetooth LE Enumerator      Unknown
+Intel(R) Wireless Bluetooth(R)         Error
+2026-01-29 17:58:28,986 INFO RUN: Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\BTHPORT' | Select-Object Start,ErrorControl
+2026-01-29 17:58:29,305 INFO EXIT 0
+2026-01-29 17:58:29,305 INFO STDOUT: Start ErrorControl
+----- ------------
+    3            1
+2026-01-29 17:58:29,305 INFO RUN: Get-Item -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Bluetooth' | Get-ChildItem
+2026-01-29 17:58:29,691 INFO EXIT 1
+2026-01-29 17:58:29,691 INFO STDERR: Get-Item : Cannot find path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Bluetooth' because it does not 
+exist.
+At line:1 char:1
++ Get-Item -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (HKLM:\SOFTWARE\...lorer\Bluetooth:String) [Get-Item], ItemNotFoundExcep 
+   tion
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetItemCommand
+2026-01-29 17:58:30,925 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:58:32,277 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:58:33,576 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:58:43,755 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:58:43,787 INFO BLOCKED: Get-Service -Name Bthserv | Format-List Name,Status,StartupType | Command not in allowlist.
+2026-01-29 17:58:43,787 INFO BLOCKED: Get-WindowsDriver -Online -DeviceId "PCI\VEN_8086&DEV_24FD" | Uninstall-Driver -Force | Command not in allowlist.
+2026-01-29 17:58:43,787 INFO RUN: pnputil /install-driver /driver "C:\Windows\System32\DriverStore\FileRepository\bthport.inf_amd64_...\bthport.inf"
+2026-01-29 17:58:44,095 INFO EXIT 1
+2026-01-29 17:58:44,095 INFO STDOUT: PNPUTIL [/add-driver <...> | /delete-driver <...> |
+         /export-driver <...> | /enum-drivers [<...>] |
+         /enum-devices [<...>] | /enum-devicetree [<...>] |
+         /disable-device <...> | /enable-device <...> |
+         /restart-device <...> | /remove-device <...> |
+         /scan-devices [<...>] | /enum-classes [<...>] |
+         /enum-interfaces [<...>] | /enum-containers [<...>] | /?]
+
+Commands:
+
+  /add-driver <filename.inf | *.inf> [/subdirs] [/install] [/reboot]
+
+    Add driver package(s) into the driver store.
+      /subdirs - traverse sub directories for driver packages.
+      /install - install/update drivers on any matching devices.
+      /reboot - reboot system if needed to complete the operation.
+
+    Examples:
+      Add driver package:
+        pnputil /add-driver x:\driver.inf
+      Add multiple driver packages:
+        pnputil /add-driver c:\oem\*.inf
+      Add and install driver package:
+        pnputil /add-driver device.inf /install
+
+  /delete-driver <oem#.inf> [/uninstall] [/force] [/reboot]
+
+    Delete driver package from the driver store.
+      /uninstall - uninstall driver package from any devices using it.
+      /force - delete driver package even when it is in use by devices.
+      /reboot - reboot system if needed to complete the operation.
+
+    Examples:
+      Delete driver package:
+        pnputil /delete-driver oem0.inf
+      Force delete driver package:
+        pnputil /delete-driver oem1.inf /force
+
+  /export-driver <oem#.inf | *> <target directory>
+
+    Export driver package(s) from the driver store into a target directory.
+
+    Examples:
+      Export driver package:
+        pnputil /export-driver oem6.inf .
+      Export all driver packages:
+        pnputil /export-driver * c:\backup
+
+  /enum-drivers [/class <name | GUID>] [/files] [/ids] [/devices]
+                [/format <txt | xml | csv>] [/output-file [<filename>]]
+
+    Enumerate all 3rd party driver packages in the driver store.
+      /class <name | GUID> - filter by driver class name or GUID.
+      /files - enumerate all driver package files.
+      /ids - display driver package and family IDs.
+      /devices - display devices with driver package installed.
+      /format - format output as text, XML, or CSV.
+      /output-file [<filename>] - write output to optional filename.
+
+    Examples:
+      Enumerate all OEM driver packages:
+        pnputil /enum-drivers
+      Enumerate all OEM driver packages of a specific class:
+        pnputil /enum-drivers /class "System"
+      Enumerate all OEM driver packages and show driver files:
+        pnputil /enum-drivers /files
+
+  /disable-device [<instance ID> | /deviceid <device ID>] [/class <name | GUID>]
+                  [/bus <name | GUID>] [/reboot] [/force]
+
+    Disable devices on the system.
+      /deviceid <device ID> - disable all devices with matching device ID.
+      /class <name | GUID> - filter by device class name or GUID.
+      /bus <name | GUID> - filter by bus enumerator name or bus type GUID.
+      /reboot - reboot system if needed to complete the operation.
+      /force - disable even if device provides critical system functionality.
+
+    Examples:
+      Disable device:
+        pnputil /disable-device "USB\VID_045E&PID_00DB\6&870CE29&0&1"
+      Disable all devices with specific hardware/compatible ID:
+        pnputil /disable-device /deviceid "USB\Class_03"
+      Disable all devices of a specific class on a specific bus:
+        pnputil /disable-device /class "USB" /bus "PCI"
+
+  /enable-device [<instance ID> | /deviceid <device ID>] [/class <name | GUID>]
+                 [/bus <name | GUID>] [/reboot]
+
+    Enable devices on the system.
+      /deviceid <device ID> - enable all devices with matching device ID.
+      /class <name | GUID> - filter by device class name or GUID.
+      /bus <name | GUID> - filter by bus enumerator name or bus type GUID.
+      /reboot - reboot system if needed to complete the operation.
+
+    Examples:
+      Enable device:
+        pnputil /enable-device "USB\VID_045E&PID_00DB\6&870CE29&0&1"
+      Enable all devices with specific hardware/compatible ID:
+        pnputil /enable-device /deviceid "USB\Class_03"
+      Enable all devices of a specific class on a specific bus:
+        pnputil /enable-device /class "USB" /bus "PCI"
+
+  /restart-device [<instance ID> | /deviceid <device ID>] [/class <name | GUID>]
+                  [/bus <name | GUID>] [/reboot]
+
+    Restart devices on the system.
+      /deviceid <device ID> - restart all devices with matching device ID.
+      /class <name | GUID> - filter by device class name or GUID.
+      /bus <name | GUID> - filter by bus enumerator name or bus type GUID.
+      /reboot - reboot system if needed to complete the operation.
+
+    Examples:
+      Restart device:
+        pnputil /restart-device "USB\VID_045E&PID_00DB\6&870CE29&0&1"
+      Restart all devices with specific hardware/compatible ID:
+        pnputil /restart-device /deviceid "USB\Class_03"
+      Restart all devices of a specific class on a specific bus:
+        pnputil /restart-device /class "USB" /bus "PCI"
+
+  /remove-device [<instance ID> | /deviceid <device ID>] [/class <name | GUID>]
+                 [/bus <name | GUID>] [/subtree] [/reboot] [/force]
+
+    Attempt to remove a device from the system.
+      /deviceid <device ID> - remove all devices with matching device ID.
+      /class <name | GUID> - filter by device class name or GUID.
+      /bus <name | GUID> - filter by bus enumerator name or bus type GUID.
+      /subtree - remove entire device subtree, including any child devices.
+      /reboot - reboot system if needed to complete the operation.
+      /force - remove even if device provides critical system functionality.
+
+    Examples:
+      Remove device:
+        pnputil /remove-device "USB\VID_045E&PID_00DB\6&870CE29&0&1"
+      Remove all devices with specific hardware/compatible ID:
+        pnputil /remove-device /deviceid "USB\Class_03"
+      Remove all devices of a specific class on a specific bus:
+        pnputil /remove-device /class "USB" /bus "PCI"
+
+  /scan-devices [/instanceid <instance ID>] [/async]
+
+    Scan the system for any device hardware changes.
+      /instanceid <instance ID> - scan device subtree for changes.
+      /async - scan for changes asynchronously.
+
+    Examples:
+      Scan devices:
+        pnputil /scan-devices
+
+  /enum-devices [/connected | /disconnected] [/class <name | GUID>]
+                [/instanceid <instance ID> | /deviceid <device ID>]
+                [/problem [<code>]] [/bus [<name | GUID>]] [/deviceids]
+                [/relations] [/services] [/stack] [/location] [/drivers]
+                [/interfaces] [/properties] [/resources]
+                [/format <txt | xml | csv>] [/output-file [<filename>]]
+
+    Enumerate all devices on the system.
+      /connected | /disconnected - filter by connected devices or
+                                   filter by disconnected devices.
+      /class <name | GUID> - filter by device class name or GUID.
+      /instanceid <instance ID> - filter by device instance ID.
+      /deviceid <device ID> - filter by device hardware/compatible ID.
+      /problem [<code>] - filter by devices with problems or
+                          filter by specific problem code.
+      /bus [<name | GUID>] - display bus enumerator name and bus type GUID or
+                             filter by bus enumerator name or bus type GUID.
+      /deviceids - display hardware/compatible IDs.
+      /relations - display parent and child device relations.
+      /services - display device services.
+      /stack - display effective device stack information.
+      /location - display location information and paths.
+      /drivers - display matching and installed drivers.
+      /interfaces - display device interfaces.
+      /properties - display all device properties.
+      /resources - display device resources.
+      /format - format output as text, XML, or CSV.
+      /output-file [<filename>] - write output to optional filename.
+
+    Examples:
+      Enumerate only connected devices on the system:
+        pnputil /enum-devices /connected
+      Enumerate device with specific instance ID:
+        pnputil /enum-devices /instanceid "ACPI\PNP0A08\1"
+      Enumerate all devices with specific hardware/compatible ID:
+        pnputil /enum-devices /deviceid "USB\Class_03"
+      Enumerate all devices with specific class:
+        pnputil /enum-devices /class Display
+        pnputil /enum-devices /class {4d36e97d-e325-11ce-bfc1-08002be10318}
+      Enumerate all devices with specific problem code:
+        pnputil /enum-devices /problem 28
+        pnputil /enum-devices /problem 0xA
+      Enumerate all devices with specific bus:
+        pnputil /enum-devices /bus PCI
+        pnputil /enum-devices /bus {c8ebdfb0-b510-11d0-80e5-00a0c92542e3}
+      Enumerate all devices with problems and display hardware/compatible IDs:
+        pnputil /enum-devices /problem /deviceids
+
+  /enum-interfaces [/enabled | /disabled] [/class <GUID>] [/instanceid <instance ID>]
+                   [/properties] [/format <txt | xml | csv>] [/output-file [<filename>]]
+
+    Enumerate all device interfaces on the system.
+      /enabled | /disabled - filter by enabled interfaces or
+                             filter by disabled interfaces.
+      /class <GUID> - filter by interface class GUID.
+      /instanceid <instance ID> - filter by device instance ID.
+      /properties - display all interface properties.
+      /format - format output as text, XML, or CSV.
+      /output-file [<filename>] - write output to optional filename.
+
+    Examples:
+      Enumerate only enabled interfaces on the system:
+        pnputil /enum-interfaces /enabled
+      Enumerate all interfaces with specific interface class GUID:
+        pnputil /enum-interfaces /class {884b96c3-56ef-11d1-bc8c-00a0c91405dd}
+
+  /enum-classes [/class <name | GUID>] [/services] [/format <txt | xml | csv>]
+                [/output-file [<filename>]]
+
+    Enumerate all device setup classes on the system.
+      /class <name | GUID> - filter by device class name or GUID.
+      /services - display device class services.
+      /format - format output as text, XML, or CSV.
+      /output-file [<filename>] - write output to optional filename.
+
+    Examples:
+      Enumerate all device setup classes on the system:
+        pnputil /enum-classes
+      Enumerate information for a specific device setup class:
+        pnputil /enum-classes /class Display
+        pnputil /enum-classes /class {4d36e968-e325-11ce-bfc1-08002be10318}
+
+    /enum-devicetree [root device instance ID] [/connected] [/services]
+                     [/stack] [/drivers] [/interfaces]
+
+    Enumerate the device tree.
+      /connected - filter by connected devices.
+      /services - display device services.
+      /stack - display effective device stack information.
+      /drivers - display matching and installed drivers.
+      /interfaces - display device interfaces.
+
+    Examples:
+      Enumerate device tree:
+        pnputil /enum-devicetree
+      Enumerate device tree with "ACPI\PNP0A03\0" as root:
+        pnputil /enum-devicetree "ACPI\PNP0A03\0"
+      Enumerate tree of connected devices and display device interfaces:
+        pnputil /enum-devicetree /connected /interfaces
+
+    /enum-containers [/containerid <container id>] [/connected | /disconnected]
+                     [/problem] [/devices] [/format <txt | xml | csv>]
+                     [/output-file [<filename>]]
+
+    Enumerate all device containers on the system.
+      /containerid <container id> - filter by container ID.
+      /connected | /disconnected - filter by connected device containers or
+                                   filter by disconnected device containers.
+      /problem - filter by device containers with problems.
+      /devices - display container devices.
+      /format - format output as text, XML, or CSV.
+      /output-file [<filename>] - write output to optional filename.
+
+    Examples:
+      Enumerate all device containers on the system:
+        pnputil /enum-containers
+      Enumerate specific device container:
+        pnputil /enum-containers /containerid "{00000000-0000-0000-ffff-ffffffffffff}"
+      Enumerate all connected device containers and associated devices:
+        pnputil /enum-containers /connected /devices
+
+  /?
+
+    Show usage screen.
+2026-01-29 17:58:44,095 INFO BLOCKED: Get-PnpDevice -Status Error | Disable-PnpDevice -Confirm:$false | Command not in allowlist.
+2026-01-29 17:58:44,095 INFO BLOCKED: Get-PnpDevice -Status Error | Enable-PnpDevice -Confirm:$false | Command not in allowlist.
+2026-01-29 17:58:44,095 INFO BLOCKED: ms-settings:network-bluetooth | Command not in allowlist.
+2026-01-29 17:58:44,095 INFO BLOCKED: Get-WindowsUpdateLog | Command not in allowlist.
+2026-01-29 17:58:46,013 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:58:48,653 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:58:48,653 INFO LLM classification parse failed. Raw response: <think>
+Okay, the user mentioned that Bluetooth is not working. Let me check the previous interaction. The last response was a JSON with issue_type as bluetooth and install_app empty. Now, the user hasn't provided a new issue but just sent an empty message. Maybe they are expecting a follow-up or more information. Since there's no new issue, I should probably prompt them to provide more details about the Bluetooth problem. But according to the instructions, I need to return JSON only if there's an issue. Since the user's latest message is empty, maybe there's no new issue to classify. Wait, the user might be continuing the same issue. But the system prompt says to classify the current issue. Since the current message is empty, perhaps there's no issue to process. However, the previous issu
+2026-01-29 17:59:01,184 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:59:17,508 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:59:22,794 INFO RUN: Get-PnpDevice -Class Bluetooth
+2026-01-29 17:59:23,889 INFO EXIT 0
+2026-01-29 17:59:23,889 INFO STDOUT: Status     Class           FriendlyName                                                                     InstanceId 
+------     -----           ------------                                                                     ---------- 
+Unknown    Bluetooth       Microsoft Bluetooth Enumerator                                                   BTH\MS_B...
+Unknown    Bluetooth       Device Identification Service                                                    BTHENUM\...
+Unknown    Bluetooth       Bluetooth Device (RFCOMM Protocol TDI)                                           BTH\MS_R...
+Unknown    Bluetooth       OnePlus Buds Pro 2                                                               BTHENUM\...
+Unknown    Bluetooth       OnePlus Buds Pro 2 Avrcp Transport                                               BTHENUM\...
+Unknown    Bluetooth       OnePlus Buds Pro 2 Avrcp Transport                                               BTHENUM\...
+Unknown    Bluetooth       Microsoft Bluetooth LE Enumerator                                                BTH\MS_B...
+Error      Bluetooth       Intel(R) Wireless Bluetooth(R)                                                   USB\VID_...
+2026-01-29 17:59:23,889 INFO RUN: Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\BTHPORT\Parameters\Radio' -Name 'RadioEnabled'
+2026-01-29 17:59:24,221 INFO EXIT 1
+2026-01-29 17:59:24,221 INFO STDERR: Get-ItemProperty : Cannot find path 'HKLM:\SYSTEM\CurrentControlSet\Services\BTHPORT\Parameters\Radio' because it does 
+not exist.
+At line:1 char:1
++ Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\BTHPO ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (HKLM:\SYSTEM\Cu...arameters\Radio:String) [Get-ItemProperty], ItemNotFo 
+   undException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetItemPropertyCommand
+2026-01-29 17:59:25,514 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:59:33,573 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:59:40,114 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:59:48,418 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:59:48,434 INFO RUN: Get-PnpDevice -Class Bluetooth | Where-Object { $_.Status -ne 'OK' } | Restart-NetAdapter
+2026-01-29 17:59:50,721 INFO EXIT 1
+2026-01-29 17:59:50,721 INFO STDERR: Restart-NetAdapter : Parameter set cannot be resolved using the specified named parameters.
+At line:1 char:72
++ ...  Bluetooth | Where-Object { $_.Status -ne 'OK' } | Restart-NetAdapter
++                                                        ~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (Win32_PnPEntity...&39FB3187&0&1"):PSObject) [Restart-NetAdapter], Para 
+   meterBindingException
+    + FullyQualifiedErrorId : AmbiguousParameterSet,Restart-NetAdapter
+ 
+Restart-NetAdapter : Parameter set cannot be resolved using the specified named parameters.
+At line:1 char:72
++ ...  Bluetooth | Where-Object { $_.Status -ne 'OK' } | Restart-NetAdapter
++                                                        ~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (Win32_PnPEntity...8000-00805F...):PSObject) [Restart-NetAdapter], Para 
+   meterBindingException
+    + FullyQualifiedErrorId : AmbiguousParameterSet,Restart-NetAdapter
+ 
+Restart-NetAdapter : Parameter set cannot be resolved using the specified named parameters.
+At line:1 char:72
++ ...  Bluetooth | Where-Object { $_.Status -ne 'OK' } | Restart-NetAdapter
++                                                        ~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (Win32_PnPEntity...&39FB3187&0&0"):PSObject) [Restart-NetAdapter], Para 
+   meterBindingException
+    + FullyQualifiedErrorId : AmbiguousParameterSet,Restart-NetAdapter
+ 
+Restart-NetAdapter : Parameter set cannot be resolved using the specified named parameters.
+At line:1 char:72
++ ...  Bluetooth | Where-Object { $_.Status -ne 'OK' } | Restart-NetAdapter
++                                                        ~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (Win32_PnPEntity...F9463FC&0&B...):PSObject) [Restart-NetAdapter], Para 
+   meterBindingException
+    + FullyQualifiedErrorId : AmbiguousParameterSet,Restart-NetAdapter
+ 
+Restart-NetAdapter : Parameter set cannot be resolved using the specified named parameters.
+At line:1 char:72
++ ...  Bluetooth | Where-Object { $_.Status -ne 'OK' } | Restart-NetAdapter
++                                                        ~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (Win32_PnPEntity...8000-00805F...):PSObject) [Restart-NetAdapter], Para 
+   meterBindingException
+    + FullyQualifiedErrorId : AmbiguousParameterSet,Restart-NetAdapter
+ 
+Restart-NetAdapter : Parameter set cannot be resolved using the specified named parameters.
+At line:1 char:72
++ ...  Bluetooth | Where-Object { $_.Status -ne 'OK' } | Restart-NetAdapter
++                                                        ~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (Win32_PnPEntity...8000-00805F...):PSObject) [Restart-NetAdapter], Para 
+   meterBindingException
+    + FullyQualifiedErrorId : AmbiguousParameterSet,Restart-NetAdapter
+ 
+Restart-NetAdapter : Parameter set cannot be resolved using the specified named parameters.
+At line:1 char:72
++ ...  Bluetooth | Where-Object { $_.Status -ne 'OK' } | Restart-NetAdapter
++                                                        ~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (Win32_PnPEntity...&39FB3187&0&3"):PSObject) [Restart-NetAdapter], Para 
+   meterBindingException
+    + FullyQualifiedErrorId : AmbiguousParameterSet,Restart-NetAdapter
+ 
+Restart-NetAdapter : Parameter set cannot be resolved using the specified named parameters.
+At line:1 char:72
++ ...  Bluetooth | Where-Object { $_.Status -ne 'OK' } | Restart-NetAdapter
++                                                        ~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (Win32_PnPEntity...3A5E8465&0&10"):PSObject) [Restart-NetAdapter], Para 
+   meterBindingException
+    + FullyQualifiedErrorId : AmbiguousParameterSet,Restart-NetAdapter
+2026-01-29 17:59:50,721 INFO BLOCKED: Get-Service -Name bthserv | Start-Service | Command not in allowlist.
+2026-01-29 17:59:51,597 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 17:59:53,605 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 18:00:05,702 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 18:00:21,166 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 18:00:32,199 INFO RUN: Get-PnpDevice -Class Bluetooth | Select-Object FriendlyName,Status,DeviceID
+2026-01-29 18:00:33,405 INFO EXIT 0
+2026-01-29 18:00:33,405 INFO STDOUT: FriendlyName                           Status  DeviceID                                                                
+------------                           ------  --------                                                                
+Microsoft Bluetooth Enumerator         Unknown BTH\MS_BTHBRB\6&39FB3187&0&1                                            
+Device Identification Service          Unknown BTHENUM\{00001200-0000-1000-8000-00805F9B34FB}_VID&000102B0_PID&0000\...
+Bluetooth Device (RFCOMM Protocol TDI) Unknown BTH\MS_RFCOMM\6&39FB3187&0&0                                            
+OnePlus Buds Pro 2                     Unknown BTHENUM\DEV_286F4043A55D\7&1F9463FC&0&BLUETOOTHDEVICE_286F4043A55D      
+OnePlus Buds Pro 2 Avrcp Transport     Unknown BTHENUM\{0000110C-0000-1000-8000-00805F9B34FB}_VID&000102B0_PID&0000\...
+OnePlus Buds Pro 2 Avrcp Transport     Unknown BTHENUM\{0000110E-0000-1000-8000-00805F9B34FB}_VID&000102B0_PID&0000\...
+Microsoft Bluetooth LE Enumerator      Unknown BTH\MS_BTHLE\6&39FB3187&0&3                                             
+Intel(R) Wireless Bluetooth(R)         Error   USB\VID_8087&PID_0026\5&3A5E8465&0&10
+2026-01-29 18:00:33,405 INFO RUN: Get-NetAdapterBluetooth | Select-Object Name,Status,Enabled
+2026-01-29 18:00:33,692 INFO EXIT 1
+2026-01-29 18:00:33,692 INFO STDERR: Get-NetAdapterBluetooth : The term 'Get-NetAdapterBluetooth' is not recognized as the name of a cmdlet, function, 
+script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is 
+correct and try again.
+At line:1 char:1
++ Get-NetAdapterBluetooth | Select-Object Name,Status,Enabled
++ ~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Get-NetAdapterBluetooth:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+2026-01-29 18:00:35,146 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 18:00:44,338 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 18:00:50,977 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 18:00:59,985 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 18:00:59,985 INFO BLOCKED: Get-Service -Name Bthserv, BluetoothUserService | Where-Object { $_.Status -ne 'Running' } | Start-Service | Command not in allowlist.
+2026-01-29 18:00:59,985 INFO BLOCKED: Get-WindowsDriver -Online -DeviceId "Intel(R) Wireless Bluetooth(R)" | Where-Object { $_.DriverVersion -lt (Get-WindowsDriver -Online -DeviceId "Intel(R) Wireless Bluetooth(R)").DriverVersion } | Update-Driver -Force | Command not in allowlist.
+2026-01-29 18:00:59,985 INFO BLOCKED: DISM /Online /Cleanup-Image /RestoreHealth | Command not in allowlist.
+2026-01-29 18:00:59,985 INFO RUN: Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Bluetooth\" | Format-List
+2026-01-29 18:01:00,412 INFO EXIT 0
+2026-01-29 18:01:00,412 INFO BLOCKED: Get-WindowsUpdateLog | Where-Object { $_.Title -like "*Bluetooth*" } | Command not in allowlist.
+2026-01-29 18:05:03,935 INFO Loaded 5 env vars from .env
+2026-01-29 18:05:12,432 INFO LLM model 'openai/gpt-oss-120b' is not compatible with Groq base_url. Falling back.
+2026-01-29 18:05:14,326 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 18:05:15,078 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 18:05:17,080 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 18:05:18,985 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 18:05:22,831 INFO RUN: Get-Service -Name BthService | Select-Object Status, DisplayName
+2026-01-29 18:05:23,240 INFO EXIT 1
+2026-01-29 18:05:23,240 INFO STDERR: Get-Service : Cannot find any service with service name 'BthService'.
+At line:1 char:1
++ Get-Service -Name BthService | Select-Object Status, DisplayName
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (BthService:String) [Get-Service], ServiceCommandException
+    + FullyQualifiedErrorId : NoServiceFoundForGivenName,Microsoft.PowerShell.Commands.GetServiceCommand
+2026-01-29 18:05:23,240 INFO RUN: Get-PnpDevice -Class Bluetooth | Select-Object FriendlyName, Status, DeviceID
+2026-01-29 18:05:24,412 INFO EXIT 0
+2026-01-29 18:05:24,412 INFO STDOUT: FriendlyName                           Status  DeviceID                                                                
+------------                           ------  --------                                                                
+Microsoft Bluetooth Enumerator         Unknown BTH\MS_BTHBRB\6&39FB3187&0&1                                            
+Device Identification Service          Unknown BTHENUM\{00001200-0000-1000-8000-00805F9B34FB}_VID&000102B0_PID&0000\...
+Bluetooth Device (RFCOMM Protocol TDI) Unknown BTH\MS_RFCOMM\6&39FB3187&0&0                                            
+OnePlus Buds Pro 2                     Unknown BTHENUM\DEV_286F4043A55D\7&1F9463FC&0&BLUETOOTHDEVICE_286F4043A55D      
+OnePlus Buds Pro 2 Avrcp Transport     Unknown BTHENUM\{0000110C-0000-1000-8000-00805F9B34FB}_VID&000102B0_PID&0000\...
+OnePlus Buds Pro 2 Avrcp Transport     Unknown BTHENUM\{0000110E-0000-1000-8000-00805F9B34FB}_VID&000102B0_PID&0000\...
+Microsoft Bluetooth LE Enumerator      Unknown BTH\MS_BTHLE\6&39FB3187&0&3                                             
+Intel(R) Wireless Bluetooth(R)         Error   USB\VID_8087&PID_0026\5&3A5E8465&0&10
+2026-01-29 18:05:24,412 INFO RUN: Get-WindowsDriver -Online -DeviceClass Bluetooth | Select-Object Driver, InfName, Status
+2026-01-29 18:05:24,860 INFO EXIT 1
+2026-01-29 18:05:24,860 INFO STDERR: Get-WindowsDriver : A parameter cannot be found that matches parameter name 'DeviceClass'.
+At line:1 char:27
++ Get-WindowsDriver -Online -DeviceClass Bluetooth | Select-Object Driv ...
++                           ~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Get-WindowsDriver], ParameterBindingException
+    + FullyQualifiedErrorId : NamedParameterNotFound,Microsoft.Dism.Commands.GetWindowsDriverCommand
+2026-01-29 18:05:24,860 INFO RUN: Get-CimInstance -ClassName Win32_BluetoothRadio | Select-Object Name, NetEnabled, PowerManagementCapabilities
+2026-01-29 18:05:25,349 INFO EXIT 1
+2026-01-29 18:05:25,349 INFO STDERR: Get-CimInstance : Invalid class 
+At line:1 char:1
++ Get-CimInstance -ClassName Win32_BluetoothRadio | Select-Object Name, ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : MetadataError: (root\cimv2:Win32_BluetoothRadio:String) [Get-CimInstance], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041010,Microsoft.Management.Infrastructure.CimCmdlets.GetCimInstanceCommand
+2026-01-29 18:05:25,349 INFO RUN: Get-EventLog -LogName System -Source 'Bluetooth' -EntryType Error -Newest 10 | Format-List TimeGenerated, Message
+2026-01-29 18:05:26,364 INFO EXIT 1
+2026-01-29 18:05:26,364 INFO STDERR: Get-EventLog : No matches found
+At line:1 char:1
++ Get-EventLog -LogName System -Source 'Bluetooth' -EntryType Error -Ne ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (:) [Get-EventLog], ArgumentException
+    + FullyQualifiedErrorId : GetEventLogNoEntriesFound,Microsoft.PowerShell.Commands.GetEventLogCommand
+2026-01-29 18:05:26,364 INFO RUN: Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\BTHPORT' | Select-Object Start, ErrorControl
+2026-01-29 18:05:26,699 INFO EXIT 0
+2026-01-29 18:05:26,699 INFO STDOUT: Start ErrorControl
+----- ------------
+    3            1
+2026-01-29 18:05:28,486 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 18:05:29,503 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 18:05:30,828 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 18:05:37,860 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 18:05:51,090 INFO RUN: Stop-Service -Name BthService -Force
+2026-01-29 18:05:51,410 INFO EXIT 1
+2026-01-29 18:05:51,410 INFO STDERR: Stop-Service : Cannot find any service with service name 'BthService'.
+At line:1 char:1
++ Stop-Service -Name BthService -Force
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (BthService:String) [Stop-Service], ServiceCommandException
+    + FullyQualifiedErrorId : NoServiceFoundForGivenName,Microsoft.PowerShell.Commands.StopServiceCommand
+2026-01-29 18:05:51,410 INFO RUN: Remove-Item -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\BTHPORT' -Recurse -Force -ErrorAction SilentlyContinue
+2026-01-29 18:05:51,665 INFO EXIT 1
+2026-01-29 18:05:51,665 INFO RUN: pnputil /add-driver C:\Windows\System32\DriverStore\FileRepository\*bluetooth* /install
+2026-01-29 18:05:51,905 INFO EXIT 0
+2026-01-29 18:05:51,905 INFO STDOUT: Microsoft PnP Utility
+
+
+Total driver packages:  0
+Added driver packages:  0
+2026-01-29 18:05:51,905 INFO RUN: Get-PnpDevice -Class Bluetooth | Where-Object { $_.Status -ne 'OK' } | Disable-PnpDevice -Confirm:$false
+2026-01-29 18:05:55,282 INFO EXIT 1
+2026-01-29 18:05:55,282 INFO STDERR: Disable-PnpDevice : Generic failure 
+At line:1 char:72
++ ... ere-Object { $_.Status -ne 'OK' } | Disable-PnpDevice -Confirm:$false
++                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...&39FB3187&0&3"):ROOT\cimv2\Win32_PnPEntity) [Disable-Pn 
+   pDevice], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Disable-PnpDevice
+ 
+Disable-PnpDevice : Generic failure 
+At line:1 char:72
++ ... ere-Object { $_.Status -ne 'OK' } | Disable-PnpDevice -Confirm:$false
++                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...F9463FC&0&B...):ROOT\cimv2\Win32_PnPEntity) [Disable-Pn 
+   pDevice], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Disable-PnpDevice
+ 
+Disable-PnpDevice : Generic failure 
+At line:1 char:72
++ ... ere-Object { $_.Status -ne 'OK' } | Disable-PnpDevice -Confirm:$false
++                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...8000-00805F...):ROOT\cimv2\Win32_PnPEntity) [Disable-Pn 
+   pDevice], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Disable-PnpDevice
+ 
+Disable-PnpDevice : Generic failure 
+At line:1 char:72
++ ... ere-Object { $_.Status -ne 'OK' } | Disable-PnpDevice -Confirm:$false
++                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...&39FB3187&0&0"):ROOT\cimv2\Win32_PnPEntity) [Disable-Pn 
+   pDevice], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Disable-PnpDevice
+ 
+Disable-PnpDevice : Generic failure 
+At line:1 char:72
++ ... ere-Object { $_.Status -ne 'OK' } | Disable-PnpDevice -Confirm:$false
++                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...&39FB3187&0&1"):ROOT\cimv2\Win32_PnPEntity) [Disable-Pn 
+   pDevice], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Disable-PnpDevice
+ 
+Disable-PnpDevice : Generic failure 
+At line:1 char:72
++ ... ere-Object { $_.Status -ne 'OK' } | Disable-PnpDevice -Confirm:$false
++                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...8000-00805F...):ROOT\cimv2\Win32_PnPEntity) [Disable-Pn 
+   pDevice], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Disable-PnpDevice
+ 
+Disable-PnpDevice : Generic failure 
+At line:1 char:72
++ ... ere-Object { $_.Status -ne 'OK' } | Disable-PnpDevice -Confirm:$false
++                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...8000-00805F...):ROOT\cimv2\Win32_PnPEntity) [Disable-Pn 
+   pDevice], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Disable-PnpDevice
+2026-01-29 18:05:55,282 INFO RUN: Get-PnpDevice -Class Bluetooth | Enable-PnpDevice -Confirm:$false
+2026-01-29 18:05:58,646 INFO EXIT 1
+2026-01-29 18:05:58,646 INFO STDERR: Enable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Enable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...&39FB3187&0&3"):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+ 
+Enable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Enable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...8000-00805F...):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+ 
+Enable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Enable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...8000-00805F...):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+ 
+Enable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Enable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...F9463FC&0&B...):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+ 
+Enable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Enable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...&39FB3187&0&0"):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+ 
+Enable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Enable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...&39FB3187&0&1"):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+ 
+Enable-PnpDevice : Generic failure 
+At line:1 char:34
++ Get-PnpDevice -Class Bluetooth | Enable-PnpDevice -Confirm:$false
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Win32_PnPEntity...8000-00805F...):ROOT\cimv2\Win32_PnPEntity) [Enable-Pnp 
+   Device], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041001,Enable-PnpDevice
+2026-01-29 18:05:58,646 INFO RUN: Get-WindowsUpdateLog
+2026-01-29 18:06:16,264 INFO EXIT 0
+2026-01-29 18:06:16,264 INFO STDOUT: Getting the list of all ETL files...
+
+Please wait for all of conversions to complete...
+
+
+================ Results from WULog_0 ================
+
+Input
+----------------
+File(s):
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260123.095403.090.1.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260123.100909.667.1.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260123.100909.667.2.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260123.112846.803.1.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260123.112846.803.2.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260123.112846.803.3.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260123.112846.803.4.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260123.112846.803.5.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260125.103252.583.1.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260125.104640.117.1.etl
+
+100.00%
+
+Output
+----------------
+DumpFile:           C:\Users\MithunD\AppData\Local\Temp\WindowsUpdateLog\wuetl.XML.tmp.eed53e63-fc14-408a-a22a-79de94458640.00000
+Warning:
+Some events do not match the schema.
+Please rerun the command with -lr to get less restricted XML dump
+The command completed successfully.
+
+==================================================
+
+
+================ Results from WULog_1 ================
+
+Input
+----------------
+File(s):
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260125.104640.117.2.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260125.104640.117.3.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260125.111431.250.1.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260125.111431.250.2.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260125.111431.250.3.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260125.111431.250.4.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260125.195033.989.1.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260125.195033.989.2.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260125.232718.759.1.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260126.002137.087.1.etl
+
+100.00%
+
+Output
+----------------
+DumpFile:           C:\Users\MithunD\AppData\Local\Temp\WindowsUpdateLog\wuetl.XML.tmp.eed53e63-fc14-408a-a22a-79de94458640.00001
+Warning:
+Some events do not match the schema.
+Please rerun the command with -lr to get less restricted XML dump
+The command completed successfully.
+
+==================================================
+
+
+================ Results from WULog_2 ================
+
+Input
+----------------
+File(s):
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260126.091117.264.1.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260126.091117.264.2.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260126.105025.014.1.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260126.105025.014.2.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260126.105025.014.3.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260126.105025.014.4.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260126.105025.014.5.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260126.113314.993.1.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260126.144616.436.1.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260127.093512.734.1.etl
+
+100.00%
+
+Output
+----------------
+DumpFile:           C:\Users\MithunD\AppData\Local\Temp\WindowsUpdateLog\wuetl.XML.tmp.eed53e63-fc14-408a-a22a-79de94458640.00002
+Warning:
+Some events do not match the schema.
+Please rerun the command with -lr to get less restricted XML dump
+The command completed successfully.
+
+==================================================
+
+
+================ Results from WULog_3 ================
+
+Input
+----------------
+File(s):
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260127.094956.570.1.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260127.105508.985.1.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260127.105508.985.2.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260127.105508.985.3.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260127.105508.985.4.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260127.105508.985.5.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260127.105508.985.6.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260127.221949.231.1.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260128.093249.595.1.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260128.104011.684.1.etl
+
+100.00%
+
+Output
+----------------
+DumpFile:           C:\Users\MithunD\AppData\Local\Temp\WindowsUpdateLog\wuetl.XML.tmp.eed53e63-fc14-408a-a22a-79de94458640.00003
+Warning:
+Some events do not match the schema.
+Please rerun the command with -lr to get less restricted XML dump
+The command completed successfully.
+
+==================================================
+
+
+================ Results from WULog_4 ================
+
+Input
+----------------
+File(s):
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260128.112031.381.1.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260128.112031.381.2.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260128.114621.246.1.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260128.114621.246.2.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260128.125018.865.1.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260128.125018.865.2.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260128.125018.865.3.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260128.125018.865.4.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260128.224507.342.1.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260129.042218.497.1.etl
+
+100.00%
+
+Output
+----------------
+DumpFile:           C:\Users\MithunD\AppData\Local\Temp\WindowsUpdateLog\wuetl.XML.tmp.eed53e63-fc14-408a-a22a-79de94458640.00004
+Warning:
+Some events do not match the schema.
+Please rerun the command with -lr to get less restricted XML dump
+The command completed successfully.
+
+==================================================
+
+
+================ Results from WULog_5 ================
+
+Input
+----------------
+File(s):
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260129.120041.030.1.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260129.120041.030.2.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260129.120041.030.3.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260129.122144.121.1.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260129.122144.121.2.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260129.122144.121.3.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260129.122144.121.4.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260129.135248.308.1.etl
+     C:\WINDOWS\logs\WindowsUpdate\WindowsUpdate.20260129.135248.308.2.etl
+
+100.00%
+
+Output
+----------------
+DumpFile:           C:\Users\MithunD\AppData\Local\Temp\WindowsUpdateLog\wuetl.XML.tmp.eed53e63-fc14-408a-a22a-79de94458640.00005
+Warning:
+Some events do not match the schema.
+Please rerun the command with -lr to get less restricted XML dump
+The command completed successfully.
+
+==================================================
+
+
+WindowsUpdate.log written to C:\Users\MithunD\Desktop\WindowsUpdate.log
+2026-01-29 18:07:27,660 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 18:07:28,217 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 18:07:30,453 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 18:07:32,188 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 18:07:33,870 INFO RUN: Get-Service -Name Spooler
+2026-01-29 18:07:34,152 INFO EXIT 0
+2026-01-29 18:07:34,152 INFO STDOUT: Status   Name               DisplayName                           
+------   ----               -----------                           
+Stopped  Spooler            Print Spooler
+2026-01-29 18:07:34,152 INFO RUN: Get-ChildItem -Path 'C:\Windows\System32\spool\printers\*'
+2026-01-29 18:07:34,419 INFO EXIT 0
+2026-01-29 18:07:34,419 INFO RUN: Get-WinEvent -FilterHashtable @{LogName='System'; ProviderName='Print'; StartTime=(Get-Date).AddDays(-1)} | Where-Object { $_.Level -eq 2 -or $_.Level -eq 3 }
+2026-01-29 18:07:34,910 INFO EXIT 1
+2026-01-29 18:07:34,910 INFO STDERR: Get-WinEvent : There is not an event provider on the localhost computer that matches "Print".
+At line:1 char:1
++ Get-WinEvent -FilterHashtable @{LogName='System'; ProviderName='Print ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Print:String) [Get-WinEvent], Exception
+    + FullyQualifiedErrorId : NoMatchingProvidersFound,Microsoft.PowerShell.Commands.GetWinEventCommand
+ 
+Get-WinEvent : The specified providers do not write events to any of the specified logs.
+At line:1 char:1
++ Get-WinEvent -FilterHashtable @{LogName='System'; ProviderName='Print ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Get-WinEvent], Exception
+    + FullyQualifiedErrorId : LogsAndProvidersDontOverlap,Microsoft.PowerShell.Commands.GetWinEventCommand
+ 
+Get-WinEvent : The parameter is incorrect
+At line:1 char:1
++ Get-WinEvent -FilterHashtable @{LogName='System'; ProviderName='Print ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Get-WinEvent], EventLogException
+    + FullyQualifiedErrorId : System.Diagnostics.Eventing.Reader.EventLogException,Microsoft.PowerShell.Commands.GetWi 
+   nEventCommand
+2026-01-29 18:07:36,227 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 18:07:37,119 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 18:07:39,018 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 18:07:43,227 WARNING Model qwen/qwen3-32b is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.
+2026-01-29 18:07:48,363 INFO RUN: Get-Service -Name Spooler | Select-Object Status
+2026-01-29 18:07:48,718 INFO EXIT 0
+2026-01-29 18:07:48,718 INFO STDOUT: Status
+ ------
+Stopped
+2026-01-29 18:07:48,718 INFO RUN: Get-EventLog -LogName System -EntryType Error -Source 'Print Spooler' -Newest 10
+2026-01-29 18:07:49,672 INFO EXIT 1
+2026-01-29 18:07:49,672 INFO STDERR: Get-EventLog : No matches found
+At line:1 char:1
++ Get-EventLog -LogName System -EntryType Error -Source 'Print Spooler' ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (:) [Get-EventLog], ArgumentException
+    + FullyQualifiedErrorId : GetEventLogNoEntriesFound,Microsoft.PowerShell.Commands.GetEventLogCommand
+2026-01-29 18:07:49,672 INFO RUN: Set-Service -Name Spooler -StartupType Automatic
+2026-01-29 18:07:49,965 INFO EXIT 0

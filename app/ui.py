@@ -173,6 +173,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.run_diag_button = QtWidgets.QPushButton("Run Diagnostics")
         self.run_diag_button.setEnabled(False)
         self.run_diag_button.clicked.connect(self._on_run_diagnostics)
+        self.status_label = QtWidgets.QLabel("Status: Idle")
+        self.status_label.setObjectName("statusLabel")
 
         header_row = QtWidgets.QHBoxLayout()
         header_row.addWidget(title)
@@ -185,6 +187,7 @@ class MainWindow(QtWidgets.QMainWindow):
         )
         self.admin_status.setObjectName("adminStatus")
         header_row.addWidget(self.admin_status)
+        header_row.addWidget(self.status_label)
         self.theme_toggle = QtWidgets.QPushButton("Dark Mode")
         self.theme_toggle.clicked.connect(self._toggle_theme)
         header_row.addWidget(self.theme_toggle)
@@ -282,6 +285,16 @@ class MainWindow(QtWidgets.QMainWindow):
             "</div>"
         )
         self.log_view.append(block)
+
+    def _shorten_summary(self, text, max_len=160):
+        if not text:
+            return text
+        first_sentence = text.split(".")[0].strip()
+        if first_sentence:
+            text = first_sentence + "."
+        if len(text) <= max_len:
+            return text
+        return text[: max_len - 3].rstrip() + "..."
 
     def _assistant_format(self, summary, bullets=None, table=None, code_sections=None):
         parts = []
@@ -404,6 +417,13 @@ class MainWindow(QtWidgets.QMainWindow):
                 QPushButton:disabled {{
                     background-color: #444444;
                 }}
+                QLabel#statusLabel {{
+                    background-color: rgba(255, 255, 255, 0.08);
+                    color: #e5e7eb;
+                    padding: 4px 10px;
+                    border-radius: 10px;
+                    font-weight: 600;
+                }}
                 QSplitter::handle {{
                     background-color: #1f1f1f;
                 }}
@@ -490,6 +510,13 @@ class MainWindow(QtWidgets.QMainWindow):
                 QPushButton:disabled {{
                     background-color: #cbced4;
                 }}
+                QLabel#statusLabel {{
+                    background-color: #eef2ff;
+                    color: #1f2937;
+                    padding: 4px 10px;
+                    border-radius: 10px;
+                    font-weight: 600;
+                }}
                 QSplitter::handle {{
                     background-color: #ffffff;
                 }}
@@ -542,6 +569,11 @@ class MainWindow(QtWidgets.QMainWindow):
         if busy:
             self.apply_button.setEnabled(False)
             self.run_diag_button.setEnabled(False)
+        self._set_status("Running script..." if busy else "Idle")
+
+    def _set_status(self, text):
+        if hasattr(self, "status_label"):
+            self.status_label.setText(f"Status: {text}")
 
     def _on_send(self):
         issue_text = self.input_box.text().strip()
@@ -605,13 +637,13 @@ class MainWindow(QtWidgets.QMainWindow):
             self._append_log(f"Web error: {diagnosis.web_error}")
         if diagnosis.web_count == 0:
             self._append_log("Web result count: 0")
-        findings_msg = self._assistant_format(summary=diagnosis.findings)
+        findings_msg = self._assistant_format(summary=self._shorten_summary(diagnosis.findings))
         self._append_chat("Assistant", findings_msg, is_html=True)
         if plan.summary:
             if diagnosis.issue_type == "system_info":
                 self._append_chat(
                     "Assistant",
-                    self._assistant_format(summary=plan.summary),
+                    self._assistant_format(summary=self._shorten_summary(plan.summary)),
                     is_html=True,
                 )
             else:
@@ -672,7 +704,7 @@ class MainWindow(QtWidgets.QMainWindow):
         bullets = [step.description for step in plan.plan_steps[:6]] if plan.plan_steps else []
         script_commands = [step.command for step in plan.plan_steps]
         message = self._assistant_format(
-            summary=plan.summary,
+            summary=self._shorten_summary(plan.summary),
             bullets=bullets,
             code_sections=[("Diagnostic script (preview)", "\n".join(script_commands))]
             if script_commands
@@ -739,8 +771,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self._start_diagnosis_execution()
 
     def _on_apply(self):
-        if self.retry_mode and self.last_issue_text:
-            return
         if not self.current_fix_plan or not self.current_fix_plan.commands:
             return
         confirm = QtWidgets.QMessageBox.question(
@@ -761,42 +791,30 @@ class MainWindow(QtWidgets.QMainWindow):
         if result.verification_message:
             self._append_log(f"Verification: {result.verification_message}")
         if result.success:
-            self._append_chat("Assistant", "Fix applied and verified.")
+            message = self._assistant_format(
+                summary="The issue should be resolved.",
+                bullets=["Fix succeeded."],
+            )
+            self._append_chat("Assistant", message, is_html=True)
             self.apply_button.setEnabled(False)
             self.auto_fix_in_progress = False
         else:
-            if result.verified:
+            if self.fix_stage >= 4:
                 self._append_chat(
-                    "Assistant", "Fix applied but there were errors. See diagnostics."
+                    "Assistant",
+                    "Fix failed after multiple attempts. Escalation is required.",
                 )
-                self.apply_button.setEnabled(True)
-                self.apply_button.setText("Retry Fix")
-                self.retry_mode = True
+                self.apply_button.setEnabled(False)
+                self.auto_fix_in_progress = False
             else:
-                if self.auto_fix_in_progress:
-                    if self.fix_stage >= 4:
-                        self._append_chat(
-                            "Assistant",
-                            "Fix attempts exhausted. Escalation required.",
-                        )
-                        self.apply_button.setEnabled(False)
-                        self.auto_fix_in_progress = False
-                    else:
-                        self.fix_stage = min(self.fix_stage + 1, 4)
-                        self._append_chat(
-                            "Assistant",
-                            "Fix attempt failed. Trying the next method...",
-                        )
-                        self._append_log("Auto-retrying with next fix stage...")
-                        self._start_plan(self.last_issue_text)
-                else:
-                    self._append_chat(
-                        "Assistant",
-                        "Fix applied but the issue persists. You can try again or escalate.",
-                    )
-                    self.apply_button.setEnabled(True)
-                    self.apply_button.setText("Retry Fix")
-                    self.retry_mode = True
+                self.fix_stage = min(self.fix_stage + 1, 4)
+                self.auto_fix_in_progress = True
+                self._append_chat(
+                    "Assistant",
+                    "Fix attempt failed. The next method is being tried.",
+                )
+                self._append_log("Auto-retrying with next fix stage...")
+                self._start_plan(self.last_issue_text)
             failed = []
             for command_result in result.command_results:
                 if command_result.error or (command_result.return_code not in (0, None)):

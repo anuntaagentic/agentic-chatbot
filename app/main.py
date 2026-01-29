@@ -39,14 +39,6 @@ def _load_env(logger=None):
         if logger is not None:
             if loaded:
                 logger.info("Loaded %d env vars from .env", len(loaded))
-                for key, value, previous in loaded:
-                    masked = _mask_env_value(key, value)
-                    status = "set"
-                    if previous is not None and previous != value:
-                        status = "overrode"
-                    elif previous is not None and previous == value:
-                        status = "kept"
-                    logger.info("ENV %s=%s (%s)", key, masked, status)
             else:
                 logger.info("No env vars loaded from .env (already set or empty file).")
     except Exception:

@@ -4,6 +4,8 @@ from datetime import datetime
 import os
 import re
 import subprocess
+import io
+import contextlib
 from dataclasses import dataclass, field
 from typing import List, Optional
 
@@ -110,7 +112,7 @@ class AutoGenHelper:
     def __init__(self):
         self.api_key = os.environ.get("GROQ_API_KEY", "")
         model = os.environ.get("GROQ_MODEL", "").strip()
-        self.model = model or "llama3-70b-8192"
+        self.model = model or "qwen/qwen3-32b"
         base_url = os.environ.get("GROQ_BASE_URL", "").strip()
         self.base_url = base_url or "https://api.groq.com/openai/v1"
         self.logger = logging.getLogger("agentic_chatbot")
@@ -127,7 +129,13 @@ class AutoGenHelper:
                 "LLM model '%s' is not compatible with Groq base_url. Falling back.",
                 self.model,
             )
-            self.model = "llama3-70b-8192"
+            self.model = "qwen/qwen3-32b"
+        if self.model == "llama3-70b-8192":
+            self.logger.info(
+                "LLM model '%s' is deprecated on Groq. Falling back.",
+                self.model,
+            )
+            self.model = "qwen/qwen3-32b"
         try:
             import autogen
 
@@ -150,12 +158,23 @@ class AutoGenHelper:
                 max_consecutive_auto_reply=1,
                 code_execution_config=False,
             )
-            user_proxy.initiate_chat(assistant, message=user_prompt, clear_history=True)
+            stdout_buffer = io.StringIO()
+            stderr_buffer = io.StringIO()
+            with contextlib.redirect_stdout(stdout_buffer), contextlib.redirect_stderr(stderr_buffer):
+                user_proxy.initiate_chat(
+                    assistant, message=user_prompt, clear_history=True
+                )
             messages = user_proxy.chat_messages.get(assistant, [])
             if not messages:
                 self.logger.info("LLM returned no messages.")
                 return ""
-            self._log_autogen_conversation(system_prompt, user_prompt, messages)
+            self._log_autogen_conversation(
+                system_prompt,
+                user_prompt,
+                messages,
+                stdout_buffer.getvalue(),
+                stderr_buffer.getvalue(),
+            )
             content = ""
             for message in reversed(messages):
                 candidate = message.get("content", "")
@@ -169,7 +188,7 @@ class AutoGenHelper:
             self.logger.info("LLM call failed: %s", exc)
             return ""
 
-    def _log_autogen_conversation(self, system_prompt, user_prompt, messages):
+    def _log_autogen_conversation(self, system_prompt, user_prompt, messages, std_out, std_err):
         try:
             log_dir = get_log_dir()
             log_path = os.path.join(
@@ -182,6 +201,10 @@ class AutoGenHelper:
                 role = message.get("role", "assistant")
                 content = message.get("content", "")
                 lines.append(f"{datetime.now().isoformat()} {role.upper()}: {content}")
+            if std_out:
+                lines.append(f"{datetime.now().isoformat()} STDOUT: {std_out.strip()}")
+            if std_err:
+                lines.append(f"{datetime.now().isoformat()} STDERR: {std_err.strip()}")
             lines.append("-" * 80)
             with open(log_path, "a", encoding="utf-8") as handle:
                 handle.write("\n".join(lines) + "\n")
@@ -880,11 +903,17 @@ class ExecutorAgent:
 
     def apply(self, fix_plan):
         results = [self.runner.run(cmd) for cmd in fix_plan.commands]
-        had_errors = any(
+        had_errors = all(
             (result.error or (result.return_code not in (0, None))) for result in results
         )
+        any_success = any(
+            result.allowed
+            and (result.return_code in (0, None))
+            and not result.error
+            for result in results
+        )
         verified, message = self._verify(fix_plan.issue_type)
-        success = (not had_errors) and verified
+        success = (not had_errors or any_success) and verified
         return ExecutionResult(
             success=success,
             command_results=results,
